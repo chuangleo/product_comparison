@@ -250,11 +250,14 @@ def generate_comparison_html(momo_file="momo_products.json", pchome_file="pchome
 
                 // 僅輸出勾選的商品，格式為 "商品名稱-售價"
                 let txtContent = '';
+                const gSku = [] ;
                 txtContent += `======MOMO商品=======\n`;
                 for (const item of selectedItems) {
                     if (item.platform === 'momo') {
                         const momoProduct = momoProducts.find(p => String(p.id) === item.id);
+                        const product = momoProduct;
                         if (momoProduct) {
+                            gSku.push(momoProduct['sku']);
                             txtContent += `title: ${momoProduct['title']}\n`;
                             txtContent += `price: NT$${momoProduct['price'].toLocaleString()}\n`;
                             txtContent += `image: ${momoProduct['image_url']}\n`;
@@ -269,10 +272,14 @@ def generate_comparison_html(momo_file="momo_products.json", pchome_file="pchome
                     if (item.platform === 'pchome') {
                         const pchomeProduct = pchomeProducts.find(p => String(p.id) === item.id);
                         if (pchomeProduct) {
+                            const momoSku = gSku[0] ;
+                            txtContent += `sku: ${pchomeProduct['sku']}\n`;
                             txtContent += `title: ${pchomeProduct['title']}\n`;
-                            txtContent += `price: NT$${pchomeProduct['price'].toLocaleString()}\n`;
                             txtContent += `image: ${pchomeProduct['image_url']}\n`;
                             txtContent += `url: ${pchomeProduct['url']}\n`;
+                            txtContent += `platform: ${pchomeProduct['platform']}\n`;
+                            txtContent += `connect: ${momoSku}\n`;
+                            txtContent += `price: NT$${pchomeProduct['price'].toLocaleString()}\n`;
                             txtContent += `\n`;
                         }
                     }
