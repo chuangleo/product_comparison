@@ -31,7 +31,7 @@ def fetch_products_for_momo(keyword, max_products=50):
         max_products (int): 最大抓取商品數量
     
     Returns:
-        list: 商品資訊列表，每個商品包含 id, title, price, image_url, url, platform
+        list: 商品資訊列表，每個商品包含 id, title, price, image_url, url, platform, sku
     """
     
     products = []
@@ -233,6 +233,13 @@ def fetch_products_for_momo(keyword, max_products=50):
                             except NoSuchElementException:
                                 url = ""
                     
+                    # 提取 i_code 作為 sku
+                    sku = ""
+                    if url:
+                        match = re.search(r'i_code=(\d+)', url)
+                        if match:
+                            sku = match.group(1)
+                    
                     # 提取商品圖片
                     image_url = ""
                     try:
@@ -285,7 +292,8 @@ def fetch_products_for_momo(keyword, max_products=50):
                             "price": price,
                             "image_url": image_url if image_url else "",
                             "url": url,
-                            "platform": "momo"
+                            "platform": "momo",
+                            "sku": sku
                         }
                         products.append(product)
                         product_id += 1
@@ -343,7 +351,7 @@ def fetch_products_for_pchome(keyword, max_products=50):
         max_products (int): 最大抓取商品數量
     
     Returns:
-        list: 商品資訊列表，每個商品包含 id, title, price, image_url, url, platform
+        list: 商品資訊列表，每個商品包含 id, title, price, image_url, url, platform, sku
     """
     products = []
     product_id = 1
@@ -397,6 +405,8 @@ def fetch_products_for_pchome(keyword, max_products=50):
                 price = item.get("price", 0)
                 pid = item.get("Id", "")
                 url = f"https://24h.pchome.com.tw/prod/{pid}" if pid else ""
+                # 提取 SKU（即 URL 中的 pid，例如 DCAHH2-A900GS0RR）
+                sku = pid if pid else ""
                 image_url = item.get("picB", "")
                 # 修正圖片 URL 處理邏輯
                 if image_url:
@@ -417,7 +427,8 @@ def fetch_products_for_pchome(keyword, max_products=50):
                         "price": price,
                         "image_url": image_url,
                         "url": url,
-                        "platform": "pchome"
+                        "platform": "pchome",
+                        "sku": sku
                     }
                     products.append(product)
                     product_id += 1
