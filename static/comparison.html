@@ -89,9 +89,9 @@
         .checkbox-container {
             margin-top: 5px;
         }
-        #exportButton {
-            display: block;
-            margin: 20px auto;
+        #exportButton, #clearButton {
+            display: inline-block;
+            margin: 20px 10px;
             padding: 10px 20px;
             background-color: #28a745;
             color: white;
@@ -101,6 +101,12 @@
         }
         #exportButton:hover {
             background-color: #218838;
+        }
+        #clearButton {
+            background-color: #dc3545;
+        }
+        #clearButton:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
@@ -3118,19 +3124,26 @@
             </tbody>
         </table>
         <button id="exportButton">匯出勾選商品</button>
+        <button id="clearButton">清空資料庫</button>
     </div>
 
     <script>
         // 確保 DOM 載入後執行
         window.onload = function() {
             const exportButton = document.getElementById('exportButton');
+            const clearButton = document.getElementById('clearButton');
+
             if (!exportButton) {
                 console.error('Export button not found!');
                 return;
             }
+            if (!clearButton) {
+                console.error('Clear button not found!');
+                return;
+            }
 
             exportButton.addEventListener('click', function() {
-                console.log('Button clicked');
+                console.log('Export button clicked');
                 const checkboxes = document.getElementsByName('selected_products');
                 if (!checkboxes || checkboxes.length === 0) {
                     console.error('No checkboxes found!');
@@ -3159,6 +3172,7 @@
                 let txtContent = '';
                 const gSku = [];
                 const selectedProducts = [];
+                const momoSelectedProducts = [];
                 txtContent += `======MOMO商品=======
 `;
                 for (const item of selectedItems) {
@@ -3181,14 +3195,15 @@
 `;
                             txtContent += `
 `;
-                            selectedProducts.push({
+                            momoSelectedProducts.push({
                                 sku: momoProduct['sku'] || '無SKU',
                                 title: momoProduct['title'] || '未知商品名稱',
                                 image: momoProduct['image_url'] || '無圖片',
                                 url: momoProduct['url'] || '無連結',
                                 platform: momoProduct['platform'] || 'momo',
                                 connect: 'root',
-                                price: momoProduct['price'] || 0
+                                price: momoProduct['price'] || 0,
+                                num: 0
                             });
                         }
                     }
@@ -3197,12 +3212,13 @@
                 txtContent += `======PCHOME商品=======
 `;
                 let skuIndex = 0;
+                let pchomeCount = 0;
                 for (const item of selectedItems) {
                     if (item.platform === 'pchome') {
                         const pchomeProduct = pchomeProducts.find(p => String(p.id) === item.id);
                         if (pchomeProduct) {
                             const momoSku = gSku[0];
-                            skuIndex++;
+                            pchomeCount++;
                             txtContent += `sku: ${pchomeProduct['sku'] || '無SKU'}
 `;
                             txtContent += `title: ${pchomeProduct['title'] || '未知商品名稱'}
@@ -3226,11 +3242,15 @@
                                 url: pchomeProduct['url'] || '無連結',
                                 platform: pchomeProduct['platform'] || 'pchome',
                                 connect: momoSku,
-                                price: pchomeProduct['price'] || 0
+                                price: pchomeProduct['price'] || 0,
                             });
                         }
                     }
                 }
+
+                momoSelectedProducts.forEach(product => {
+                    product.num = pchomeCount;
+                });
 
                 if (!txtContent.trim()) {
                     console.error('No content to export');
@@ -3239,13 +3259,15 @@
                 }
 
                 console.log('TXT Content:', txtContent);
+                console.log('Selected Products:', selectedProducts);
+                console.log('MOMO Selected Products:', momoSelectedProducts);
                 // 發送勾選的商品資料到後端
                 fetch('/save-to-mysql', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ products: selectedProducts })
+                    body: JSON.stringify({ products: selectedProducts, momo_products: momoSelectedProducts })
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -3272,6 +3294,31 @@
                 document.body.removeChild(a);
                 window.URL.revokeObjectURL(url);
                 alert('匯出成功！');
+            });
+
+            clearButton.addEventListener('click', function() {
+                console.log('Clear button clicked');
+                if (!confirm('確定要清空資料庫中的 products 和 momo_products 表格嗎？此操作無法復原！')) {
+                    return;
+                }
+
+                fetch('/clear-products', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('資料庫已清空');
+                        alert('資料庫 products 和 momo_products 表格已清空！');
+                    } else {
+                        console.error('清空資料庫失敗:', data.error);
+                        alert('清空資料庫失敗：' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('清空資料庫請求失敗:', error);
+                    alert('無法連接到伺服器！');
+                });
             });
         };
     </script>
