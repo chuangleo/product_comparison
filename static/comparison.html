@@ -89,7 +89,7 @@
         .checkbox-container {
             margin-top: 5px;
         }
-        #exportButton, #clearButton {
+        #exportButton, #clearProductsButton, #clearMomoButton, #clearPchomeButton {
             display: inline-block;
             margin: 20px 10px;
             padding: 10px 20px;
@@ -102,10 +102,10 @@
         #exportButton:hover {
             background-color: #218838;
         }
-        #clearButton {
+        #clearProductsButton, #clearMomoButton, #clearPchomeButton {
             background-color: #dc3545;
         }
-        #clearButton:hover {
+        #clearProductsButton:hover, #clearMomoButton:hover, #clearPchomeButton:hover {
             background-color: #c82333;
         }
     </style>
@@ -3124,21 +3124,33 @@
             </tbody>
         </table>
         <button id="exportButton">匯出勾選商品</button>
-        <button id="clearButton">清空資料庫</button>
+        <button id="clearProductsButton">清空 leaf 表格</button>
+        <button id="clearMomoButton">清空 root 表格</button>
+        <button id="clearPchomeButton">清空 All PCHome Products 表格</button>
     </div>
 
     <script>
         // 確保 DOM 載入後執行
         window.onload = function() {
             const exportButton = document.getElementById('exportButton');
-            const clearButton = document.getElementById('clearButton');
+            const clearProductsButton = document.getElementById('clearProductsButton');
+            const clearMomoButton = document.getElementById('clearMomoButton');
+            const clearPchomeButton = document.getElementById('clearPchomeButton');
 
             if (!exportButton) {
                 console.error('Export button not found!');
                 return;
             }
-            if (!clearButton) {
-                console.error('Clear button not found!');
+            if (!clearProductsButton) {
+                console.error('Clear Products button not found!');
+                return;
+            }
+            if (!clearMomoButton) {
+                console.error('Clear MOMO button not found!');
+                return;
+            }
+            if (!clearPchomeButton) {
+                console.error('Clear PCHome button not found!');
                 return;
             }
 
@@ -3201,9 +3213,9 @@
                                 image: momoProduct['image_url'] || '無圖片',
                                 url: momoProduct['url'] || '無連結',
                                 platform: momoProduct['platform'] || 'momo',
-                                connect: 'root',
+                                connect: '',
                                 price: momoProduct['price'] || 0,
-                                num: 0
+                                num: 0 // 初始值，稍後更新
                             });
                         }
                     }
@@ -3211,13 +3223,12 @@
 
                 txtContent += `======PCHOME商品=======
 `;
-                let skuIndex = 0;
                 let pchomeCount = 0;
                 for (const item of selectedItems) {
                     if (item.platform === 'pchome') {
                         const pchomeProduct = pchomeProducts.find(p => String(p.id) === item.id);
                         if (pchomeProduct) {
-                            const momoSku = gSku[0];
+                            const momoSku = gSku[0] || '無對應MOMO商品';
                             pchomeCount++;
                             txtContent += `sku: ${pchomeProduct['sku'] || '無SKU'}
 `;
@@ -3242,12 +3253,13 @@
                                 url: pchomeProduct['url'] || '無連結',
                                 platform: pchomeProduct['platform'] || 'pchome',
                                 connect: momoSku,
-                                price: pchomeProduct['price'] || 0,
+                                price: pchomeProduct['price'] || 0
                             });
                         }
                     }
                 }
 
+                // 更新 momoSelectedProducts 中每個物件的 num 欄位為 PCHome 商品迴圈次數
                 momoSelectedProducts.forEach(product => {
                     product.num = pchomeCount;
                 });
@@ -3296,9 +3308,9 @@
                 alert('匯出成功！');
             });
 
-            clearButton.addEventListener('click', function() {
-                console.log('Clear button clicked');
-                if (!confirm('確定要清空資料庫中的 products 和 momo_products 表格嗎？此操作無法復原！')) {
+            clearProductsButton.addEventListener('click', function() {
+                console.log('Clear Products button clicked');
+                if (!confirm('確定要清空 products_database.products 表格嗎？此操作無法復原！')) {
                     return;
                 }
 
@@ -3308,15 +3320,65 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        console.log('資料庫已清空');
-                        alert('資料庫 products 和 momo_products 表格已清空！');
+                        console.log('products_database.products 已清空');
+                        alert('products_database.products 表格已清空！');
                     } else {
-                        console.error('清空資料庫失敗:', data.error);
-                        alert('清空資料庫失敗：' + data.error);
+                        console.error('清空 products_database.products 失敗:', data.error);
+                        alert('清空 products_database.products 失敗：' + data.error);
                     }
                 })
                 .catch(error => {
-                    console.error('清空資料庫請求失敗:', error);
+                    console.error('清空 products_database.products 請求失敗:', error);
+                    alert('無法連接到伺服器！');
+                });
+            });
+
+            clearMomoButton.addEventListener('click', function() {
+                console.log('Clear MOMO button clicked');
+                if (!confirm('確定要清空 momo_database.momo_products 表格嗎？此操作無法復原！')) {
+                    return;
+                }
+
+                fetch('/clear-momo-products', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('momo_database.momo_products 已清空');
+                        alert('momo_database.momo_products 表格已清空！');
+                    } else {
+                        console.error('清空 momo_database.momo_products 失敗:', data.error);
+                        alert('清空 momo_database.momo_products 失敗：' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('清空 momo_database.momo_products 請求失敗:', error);
+                    alert('無法連接到伺服器！');
+                });
+            });
+
+            clearPchomeButton.addEventListener('click', function() {
+                console.log('Clear PCHome button clicked');
+                if (!confirm('確定要清空 pchome_database.pchome_products 表格嗎？此操作無法復原！')) {
+                    return;
+                }
+
+                fetch('/clear-pchome-products', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('pchome_database.pchome_products 已清空');
+                        alert('pchome_database.pchome_products 表格已清空！');
+                    } else {
+                        console.error('清空 pchome_database.pchome_products 失敗:', data.error);
+                        alert('清空 pchome_database.pchome_products 失敗：' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('清空 pchome_database.pchome_products 請求失敗:', error);
                     alert('無法連接到伺服器！');
                 });
             });
