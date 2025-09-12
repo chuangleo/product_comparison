@@ -1,10 +1,13 @@
 import json
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import mysql.connector
 from mysql.connector import Error
 
 app = Flask(__name__)
+
+# 註冊 min 函數到 Jinja2 模板環境
+app.jinja_env.globals.update(min=min)
 
 def initialize_pchome_database(pchome_file="pchome_products.json"):
     """
@@ -22,11 +25,33 @@ def initialize_pchome_database(pchome_file="pchome_products.json"):
         return
 
     try:
+        # 先連接到 MySQL 伺服器（不指定資料庫）來建立資料庫
+        temp_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+        
+        temp_cursor = temp_conn.cursor()
+        temp_cursor.execute("CREATE DATABASE IF NOT EXISTS pchome_database")
+        temp_cursor.close()
+        temp_conn.close()
+        print("資料庫 'pchome_database' 已建立或已存在")
+        
+        # 然後連接到指定的資料庫
         pchome_conn = mysql.connector.connect(
             host='localhost',
             user='root',
             password='12345678',
-            database='pchome_database'
+            database='pchome_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
         )
 
         if pchome_conn.is_connected():
@@ -46,29 +71,42 @@ def initialize_pchome_database(pchome_file="pchome_products.json"):
             pchome_cursor.execute(create_pchome_table_query)
             print("表格 'pchome_database.pchome_products' 已建立或已存在")
 
-            # 清空表格以避免重複插入
-            pchome_cursor.execute("TRUNCATE TABLE pchome_products")
-            print("已清空 pchome_database.pchome_products 表格")
+            # 檢查表格是否已有資料
+            pchome_cursor.execute("SELECT COUNT(*) FROM pchome_products")
+            existing_count = pchome_cursor.fetchone()[0]
+            
+            if existing_count > 0:
+                print(f"表格中已有 {existing_count} 筆資料，跳過插入")
+                return
+            
+            print("表格為空，開始插入商品資料")
 
-            # 插入 PChome 商品資料，使用 INSERT IGNORE 避免重複 SKU
+            # 插入 PChome 商品資料
             insert_pchome_query = """
-            INSERT IGNORE INTO pchome_products (sku, title, image, url, platform, connect, price)
+            INSERT INTO pchome_products (sku, title, image, url, platform, connect, price)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
+            inserted_count = 0
             for product in pchome_products:
-                pchome_cursor.execute(insert_pchome_query, (
-                    product.get('sku', '無SKU'),
-                    product.get('title', '未知商品名稱'),
-                    product.get('image_url', '無圖片'),
-                    product.get('url', '無連結'),
-                    product.get('platform', 'pchome'),
-                    '',
-                    product.get('price', 0)
-                ))
-                print(f"已插入商品到 pchome_database.pchome_products：{product}")
+                try:
+                    pchome_cursor.execute(insert_pchome_query, (
+                        product.get('sku', '無SKU'),
+                        product.get('title', '未知商品名稱'),
+                        product.get('image_url', '無圖片'),
+                        product.get('url', '無連結'),
+                        product.get('platform', 'pchome'),
+                        '',
+                        product.get('price', 0)
+                    ))
+                    inserted_count += 1
+                except Error as e:
+                    print(f"插入商品時發生錯誤: {e}, 商品: {product.get('sku', '無SKU')}")
+                # print(f"已插入商品到 pchome_database.pchome_products：{product}")
 
+            print(f"總共處理了 {len(pchome_products)} 筆商品")
+            print(f"成功插入了 {inserted_count} 筆商品資料到 pchome_database.pchome_products")
+            
             pchome_conn.commit()
-            print(f"已插入 {pchome_cursor.rowcount} 筆商品資料到 pchome_database.pchome_products")
 
     except Error as e:
         print(f"MySQL 錯誤: {e}")
@@ -78,18 +116,17 @@ def initialize_pchome_database(pchome_file="pchome_products.json"):
             pchome_conn.close()
             print("pchome_database 連線已關閉")
 
-def generate_comparison_html(momo_file="momo_products.json", pchome_file="pchome_products.json", output_file="static/comparison.html"):
+def generate_comparison_html(momo_file="momo_products.json", pchome_file="pchome_products.json"):
     """
-    讀取 Momo 和 PChome 的 JSON 檔案，生成帶有勾選框的比較網頁，支持匯出僅勾選的商品為 TXT 檔案，
-    將勾選的商品插入 products_database.products 和 momo_database.momo_products 表格，並支援清空資料庫
+    讀取 Momo 和 PChome 的 JSON 檔案，返回數據供模板使用
     
     Args:
         momo_file (str): Momo 商品 JSON 檔案路徑
         pchome_file (str): PChome 商品 JSON 檔案路徑
-        output_file (str): 輸出的 HTML 檔案名稱，預設為 static/comparison.html
+    
+    Returns:
+        tuple: (momo_products, pchome_products, max_length)
     """
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
-
     momo_products = []
     if os.path.exists(momo_file):
         with open(momo_file, "r", encoding="utf-8") as f:
@@ -105,487 +142,19 @@ def generate_comparison_html(momo_file="momo_products.json", pchome_file="pchome
         print(f"錯誤：{pchome_file} 檔案不存在")
 
     max_length = len(pchome_products)  # 以 PCHome 商品數量為表格行數
+    
+    return momo_products, pchome_products, max_length
 
-    html_content = """
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品比較與標註 - Momo vs PChome</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        .comparison-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-            vertical-align: top;
-        }
-        th {
-            background-color: #f2f2f2;
-            font-size: 1.2em;
-        }
-        .product-card {
-            width: 500px;
-            height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow-y: auto;
-        }
-        .product-content {
-            padding: 5px;
-        }
-        .product-image {
-            width: 100%;
-            height: 150px;
-            border-radius: 5px;
-            object-fit: contain;
-        }
-        .product-title {
-            font-size: 1.1em;
-            margin: 5px 0;
-            color: #333;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            height: 80px;
-            overflow-y: auto;
-        }
-        .product-price {
-            font-size: 1em;
-            color: #e44d26;
-            margin: 5px 0;
-            height: 20px;
-        }
-        .buy-button {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 5px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-        }
-        .buy-button:hover {
-            background-color: #0056b3;
-        }
-        .empty-card {
-            height: 300px;
-            background-color: #f9f9f9;
-            color: #888;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .checkbox-container {
-            margin-top: 5px;
-        }
-        #exportButton, #clearProductsButton, #clearMomoButton, #clearPchomeButton {
-            display: inline-block;
-            margin: 20px 10px;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #exportButton:hover {
-            background-color: #218838;
-        }
-        #clearProductsButton, #clearMomoButton, #clearPchomeButton {
-            background-color: #dc3545;
-        }
-        #clearProductsButton:hover, #clearMomoButton:hover, #clearPchomeButton:hover {
-            background-color: #c82333;
-        }
-        #momoIndexSelect {
-            margin: 20px 10px;
-            padding: 10px;
-            font-size: 1em;
-        }
-    </style>
-</head>
-<body>
-    <div class="comparison-container">
-        <select id="momoIndexSelect">
-            <option value="all">顯示所有 MOMO 商品</option>
-            """ + ''.join(f'<option value="{i}">{i}</option>' for i in range(1, min(101, len(momo_products) + 1))) + """
-        </select>
-        <table id="comparisonTable">
-            <thead>
-                <tr>
-                    <th>Momo 商品</th>
-                    <th>PChome 商品</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-            </tbody>
-        </table>
-        <button id="exportButton">匯出勾選商品</button>
-        <button id="clearProductsButton">清空 Products 表格</button>
-        <button id="clearMomoButton">清空 MOMO Products 表格</button>
-        <button id="clearPchomeButton">清空 PCHome Products 表格</button>
-    </div>
-
-    <script>
-        const momoProducts = """ + json.dumps(momo_products) + """;
-        const pchomeProducts = """ + json.dumps(pchome_products) + """;
-        const maxLength = """ + str(max_length) + """;
-
-        function renderTable(momoIndex = 'all') {
-            const tableBody = document.getElementById('tableBody');
-            tableBody.innerHTML = '';
-
-            const filteredMomoProducts = momoIndex === 'all' ? momoProducts : [momoProducts[momoIndex - 1]];
-
-            for (let i = 0; i < maxLength; i++) {
-                const momoProduct = filteredMomoProducts[0] && momoIndex !== 'all' ? filteredMomoProducts[0] : (filteredMomoProducts[i] || null);
-                const pchomeProduct = pchomeProducts[i] || null;
-
-                let rowHtml = '<tr>';
-                
-                // Momo 商品
-                if (momoProduct) {
-                    const title = momoProduct.title.replace(/"/g, '&quot;').replace(/'/g, '&apos;');
-                    const imageUrl = momoProduct.image_url || 'https://via.placeholder.com/300x200?text=No+Image';
-                    rowHtml += `
-                        <td>
-                            <div class="product-card">
-                                <div class="product-content">
-                                    <img src="${imageUrl}" alt="${title}" class="product-image">
-                                    <h3 class="product-title">${title}</h3>
-                                    <p class="product-price">NT$${momoProduct.price.toLocaleString()}</p>
-                                    <a href="${momoProduct.url}" class="buy-button" target="_blank">立即購買</a>
-                                </div>
-                                <div class="checkbox-container">
-                                    <input type="checkbox" id="momo_${momoProduct.id}" name="selected_products" value="${momoProduct.id}" data-platform="momo">
-                                    <label for="momo_${momoProduct.id}">選取</label>
-                                </div>
-                            </div>
-                        </td>
-                    `;
-                } else {
-                    rowHtml += `<td><div class="empty-card">無對應商品</div></td>`;
-                }
-
-                // PChome 商品
-                if (pchomeProduct) {
-                    const title = pchomeProduct.title.replace(/"/g, '&quot;').replace(/'/g, '&apos;');
-                    const rawImageUrl = pchomeProduct.image_url;
-                    let imageUrl = rawImageUrl && rawImageUrl.startsWith('http') ? rawImageUrl : 'https://cs.ecimg.tw' + (rawImageUrl || '');
-                    if (!imageUrl || !imageUrl.startsWith('http')) {
-                        imageUrl = 'https://via.placeholder.com/300x200?text=No+Image';
-                    }
-                    rowHtml += `
-                        <td>
-                            <div class="product-card">
-                                <div class="product-content">
-                                    <img src="${imageUrl}" alt="${title}" class="product-image">
-                                    <h3 class="product-title">${title}</h3>
-                                    <p class="product-price">NT$${pchomeProduct.price.toLocaleString()}</p>
-                                    <a href="${pchomeProduct.url}" class="buy-button" target="_blank">立即購買</a>
-                                </div>
-                                <div class="checkbox-container">
-                                    <input type="checkbox" id="pchome_${pchomeProduct.id}" name="selected_products" value="${pchomeProduct.id}" data-platform="pchome">
-                                    <label for="pchome_${pchomeProduct.id}">選取</label>
-                                </div>
-                            </div>
-                        </td>
-                    `;
-                } else {
-                    rowHtml += `<td><div class="empty-card">無對應商品</div></td>`;
-                }
-
-                rowHtml += '</tr>';
-                tableBody.innerHTML += rowHtml;
-            }
-        }
-
-        // 初始渲染表格
-        renderTable();
-
-        // 監聽下拉選單變化
-        document.getElementById('momoIndexSelect').addEventListener('change', function() {
-            const selectedIndex = this.value;
-            renderTable(selectedIndex);
-        });
-
-        // 確保 DOM 載入後執行
-        window.onload = function() {
-            const exportButton = document.getElementById('exportButton');
-            const clearProductsButton = document.getElementById('clearProductsButton');
-            const clearMomoButton = document.getElementById('clearMomoButton');
-            const clearPchomeButton = document.getElementById('clearPchomeButton');
-
-            if (!exportButton) {
-                console.error('Export button not found!');
-                return;
-            }
-            if (!clearProductsButton) {
-                console.error('Clear Products button not found!');
-                return;
-            }
-            if (!clearMomoButton) {
-                console.error('Clear MOMO button not found!');
-                return;
-            }
-            if (!clearPchomeButton) {
-                console.error('Clear PCHome button not found!');
-                return;
-            }
-
-            exportButton.addEventListener('click', function() {
-                console.log('Export button clicked');
-                const checkboxes = document.getElementsByName('selected_products');
-                if (!checkboxes || checkboxes.length === 0) {
-                    console.error('No checkboxes found!');
-                    alert('未找到可選商品！');
-                    return;
-                }
-
-                const selectedItems = Array.from(checkboxes)
-                    .filter(checkbox => checkbox.checked)
-                    .map(checkbox => ({
-                        id: checkbox.value,
-                        platform: checkbox.getAttribute('data-platform')
-                    }));
-
-                if (selectedItems.length === 0) {
-                    console.log('No items selected');
-                    alert('請先勾選至少一個商品！');
-                    return;
-                }
-
-                console.log('Selected IDs:', selectedItems);
-                let txtContent = '';
-                const gSku = [];
-                const selectedProducts = [];
-                const momoSelectedProducts = [];
-                txtContent += `======MOMO商品=======\n`;
-                for (const item of selectedItems) {
-                    if (item.platform === 'momo') {
-                        const momoProduct = momoProducts.find(p => String(p.id) === item.id);
-                        if (momoProduct) {
-                            const product = momoProduct;
-                            gSku.push(momoProduct['sku'] || '無SKU');
-                            txtContent += `sku: ${momoProduct['sku'] || '無SKU'}\n`;
-                            txtContent += `title: ${momoProduct['title'] || '未知商品名稱'}\n`;
-                            txtContent += `image: ${momoProduct['image_url'] || '無圖片'}\n`;
-                            txtContent += `url: ${momoProduct['url'] || '無連結'}\n`;
-                            txtContent += `platform: ${momoProduct['platform'] || 'momo'}\n`;
-                            txtContent += `price: NT$${momoProduct['price']?.toLocaleString() || '未知價格'}\n`;
-                            txtContent += `\n`;
-                            momoSelectedProducts.push({
-                                sku: momoProduct['sku'] || '無SKU',
-                                title: momoProduct['title'] || '未知商品名稱',
-                                image: momoProduct['image_url'] || '無圖片',
-                                url: momoProduct['url'] || '無連結',
-                                platform: momoProduct['platform'] || 'momo',
-                                connect: 'root',
-                                price: momoProduct['price'] || 0,
-                                num: 0 // 初始值，稍後更新
-                            });
-                        }
-                    }
-                }
-
-                txtContent += `======PCHOME商品=======\n`;
-                let pchomeCount = 0;
-                for (const item of selectedItems) {
-                    if (item.platform === 'pchome') {
-                        const pchomeProduct = pchomeProducts.find(p => String(p.id) === item.id);
-                        if (pchomeProduct) {
-                            const momoSku = gSku[0] || '無對應MOMO商品';
-                            pchomeCount++;
-                            txtContent += `sku: ${pchomeProduct['sku'] || '無SKU'}\n`;
-                            txtContent += `title: ${pchomeProduct['title'] || '未知商品名稱'}\n`;
-                            txtContent += `image: ${pchomeProduct['image_url'] || '無圖片'}\n`;
-                            txtContent += `url: ${pchomeProduct['url'] || '無連結'}\n`;
-                            txtContent += `platform: ${pchomeProduct['platform'] || 'pchome'}\n`;
-                            txtContent += `connect: ${momoSku}\n`;
-                            txtContent += `price: NT$${pchomeProduct['price']?.toLocaleString() || '未知價格'}\n`;
-                            txtContent += `\n`;
-                            selectedProducts.push({
-                                sku: pchomeProduct['sku'] || '無SKU',
-                                title: pchomeProduct['title'] || '未知商品名稱',
-                                image: pchomeProduct['image_url'] || '無圖片',
-                                url: pchomeProduct['url'] || '無連結',
-                                platform: pchomeProduct['platform'] || 'pchome',
-                                connect: momoSku,
-                                price: pchomeProduct['price'] || 0
-                            });
-                        }
-                    }
-                }
-
-                // 更新 momoSelectedProducts 中每個物件的 num 欄位為 PCHome 商品迴圈次數
-                momoSelectedProducts.forEach(product => {
-                    product.num = pchomeCount;
-                });
-
-                if (!txtContent.trim()) {
-                    console.error('No content to export');
-                    alert('未找到勾選的商品對應內容！');
-                    return;
-                }
-
-                console.log('TXT Content:', txtContent);
-                console.log('Selected Products:', selectedProducts);
-                console.log('MOMO Selected Products:', momoSelectedProducts);
-                // 發送勾選的商品資料到後端
-                fetch('/save-to-mysql', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ products: selectedProducts, momo_products: momoSelectedProducts })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('資料成功儲存到 MySQL');
-                    } else {
-                        console.error('儲存到 MySQL 失敗:', data.error);
-                        alert('儲存到資料庫失敗！');
-                    }
-                })
-                .catch(error => {
-                    console.error('發送資料到後端失敗:', error);
-                    alert('無法連接到伺服器！');
-                });
-
-                // 創建 Blob 並下載 TXT
-                const blob = new Blob([txtContent], { type: 'text/plain' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'selected_products.txt';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-                alert('匯出成功！');
-            });
-
-            clearProductsButton.addEventListener('click', function() {
-                console.log('Clear Products button clicked');
-                if (!confirm('確定要清空 products_database.products 表格嗎？此操作無法復原！')) {
-                    return;
-                }
-
-                fetch('/clear-products', {
-                    method: 'POST'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('products_database.products 已清空');
-                        alert('products_database.products 表格已清空！');
-                    } else {
-                        console.error('清空 products_database.products 失敗:', data.error);
-                        alert('清空 products_database.products 失敗：' + data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error('清空 products_database.products 請求失敗:', error);
-                    alert('無法連接到伺服器！');
-                });
-            });
-
-            clearMomoButton.addEventListener('click', function() {
-                console.log('Clear MOMO button clicked');
-                if (!confirm('確定要清空 momo_database.momo_products 表格嗎？此操作無法復原！')) {
-                    return;
-                }
-
-                fetch('/clear-momo-products', {
-                    method: 'POST'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('momo_database.momo_products 已清空');
-                        alert('momo_database.momo_products 表格已清空！');
-                    } else {
-                        console.error('清空 momo_database.momo_products 失敗:', data.error);
-                        alert('清空 momo_database.momo_products 失敗：' + data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error('清空 momo_database.momo_products 請求失敗:', error);
-                    alert('無法連接到伺服器！');
-                });
-            });
-
-            clearPchomeButton.addEventListener('click', function() {
-                console.log('Clear PCHome button clicked');
-                if (!confirm('確定要清空 pchome_database.pchome_products 表格嗎？此操作無法復原！')) {
-                    return;
-                }
-
-                fetch('/clear-pchome-products', {
-                    method: 'POST'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('pchome_database.pchome_products 已清空');
-                        alert('pchome_database.pchome_products 表格已清空！');
-                        // 重新初始化 pchome_database 以恢復數據
-                        fetch('/initialize-pchome', {
-                            method: 'POST'
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                console.log('pchome_database.pchome_products 已重新初始化');
-                                alert('pchome_database.pchome_products 表格已重新初始化！');
-                            } else {
-                                console.error('重新初始化 pchome_database.pchome_products 失敗:', data.error);
-                                alert('重新初始化 pchome_database.pchome_products 失敗：' + data.error);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('重新初始化 pchome_database.pchome_products 請求失敗:', error);
-                            alert('無法連接到伺服器！');
-                        });
-                    } else {
-                        console.error('清空 pchome_database.pchome_products 失敗:', data.error);
-                        alert('清空 pchome_database.pchome_products 失敗：' + data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error('清空 pchome_database.pchome_products 請求失敗:', error);
-                    alert('無法連接到伺服器！');
-                });
-            });
-        };
-    </script>
-</body>
-</html>
-"""
-
-    with open(output_file, "w", encoding="utf-8") as f:
-        f.write(html_content)
-    print(f"HTML 網頁已生成：{output_file}")
+@app.route('/')
+def index():
+    """
+    首頁路由，渲染商品比較頁面
+    """
+    momo_products, pchome_products, max_length = generate_comparison_html()
+    return render_template('comparison.html', 
+                         momo_products=momo_products, 
+                         pchome_products=pchome_products, 
+                         max_length=max_length)
 
 @app.route('/save-to-mysql', methods=['POST'])
 def save_to_mysql():
@@ -596,18 +165,42 @@ def save_to_mysql():
         print("收到用於插入的商品資料：", products)
         print("收到用於插入的 MOMO 商品資料：", momo_products)
 
+        # 建立資料庫（如果不存在）
+        temp_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+        temp_cursor = temp_conn.cursor()
+        temp_cursor.execute("CREATE DATABASE IF NOT EXISTS products_database")
+        temp_cursor.execute("CREATE DATABASE IF NOT EXISTS momo_database")
+        temp_cursor.close()
+        temp_conn.close()
+
         products_conn = mysql.connector.connect(
             host='localhost',
             user='root',
             password='12345678',
-            database='products_database'
+            database='products_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
         )
 
         momo_conn = mysql.connector.connect(
             host='localhost',
             user='root',
             password='12345678',
-            database='momo_database'
+            database='momo_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
         )
 
         if products_conn.is_connected() and momo_conn.is_connected():
@@ -649,40 +242,52 @@ def save_to_mysql():
             INSERT INTO products (sku, title, image, url, platform, connect, price)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
+            inserted_products_count = 0
             for product in products:
-                products_cursor.execute(insert_products_query, (
-                    product['sku'],
-                    product['title'],
-                    product['image'],
-                    product['url'],
-                    product['platform'],
-                    product['connect'],
-                    product['price']
-                ))
-                print(f"已插入商品到 products_database.products：{product}")
+                try:
+                    products_cursor.execute(insert_products_query, (
+                        product['sku'],
+                        product['title'],
+                        product['image'],
+                        product['url'],
+                        product['platform'],
+                        product['connect'],
+                        product['price']
+                    ))
+                    inserted_products_count += 1
+                    print(f"已插入商品到 products_database.products：{product}")
+                except Error as e:
+                    print(f"插入 products 商品時發生錯誤: {e}, 商品: {product.get('sku', '無SKU')}")
 
             insert_momo_query = """
-            INSERT INTO momo_products (sku, title, image, url, platform, connect, price, num)
+            INSERT IGNORE INTO momo_products (sku, title, image, url, platform, connect, price, num)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """
+            inserted_momo_count = 0
             for product in momo_products:
-                momo_cursor.execute(insert_momo_query, (
-                    product['sku'],
-                    product['title'],
-                    product['image'],
-                    product['url'],
-                    product['platform'],
-                    product['connect'],
-                    product['price'],
-                    product['num']
-                ))
-                print(f"已插入商品到 momo_database.momo_products：{product}")
+                try:
+                    momo_cursor.execute(insert_momo_query, (
+                        product['sku'],
+                        product['title'],
+                        product['image'],
+                        product['url'],
+                        product['platform'],
+                        product['connect'],
+                        product['price'],
+                        product['num']
+                    ))
+                    if momo_cursor.rowcount > 0:
+                        inserted_momo_count += 1
+                        print(f"已插入商品到 momo_database.momo_products：{product}")
+                    else:
+                        print(f"商品 SKU {product['sku']} 已存在，跳過插入")
+                except Error as e:
+                    print(f"插入 MOMO 商品時發生錯誤: {e}, 商品: {product.get('sku', '無SKU')}")
 
             products_conn.commit()
             momo_conn.commit()
-            print(f"已插入 {products_cursor.rowcount} 筆商品資料到 products_database.products")
-            if momo_cursor.rowcount > 0:
-                print(f"已插入 {momo_cursor.rowcount} 筆商品資料到 momo_database.momo_products")
+            print(f"已插入 {inserted_products_count} 筆商品資料到 products_database.products")
+            print(f"已插入 {inserted_momo_count} 筆商品資料到 momo_database.momo_products")
             return jsonify({'success': True})
 
     except Error as e:
@@ -702,11 +307,30 @@ def save_to_mysql():
 @app.route('/clear-products', methods=['POST'])
 def clear_products():
     try:
+        # 建立資料庫（如果不存在）
+        temp_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+        temp_cursor = temp_conn.cursor()
+        temp_cursor.execute("CREATE DATABASE IF NOT EXISTS products_database")
+        temp_cursor.close()
+        temp_conn.close()
+
         products_conn = mysql.connector.connect(
             host='localhost',
             user='root',
             password='12345678',
-            database='products_database'
+            database='products_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
         )
 
         if products_conn.is_connected():
@@ -729,11 +353,30 @@ def clear_products():
 @app.route('/clear-momo-products', methods=['POST'])
 def clear_momo_products():
     try:
+        # 建立資料庫（如果不存在）
+        temp_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+        temp_cursor = temp_conn.cursor()
+        temp_cursor.execute("CREATE DATABASE IF NOT EXISTS momo_database")
+        temp_cursor.close()
+        temp_conn.close()
+
         momo_conn = mysql.connector.connect(
             host='localhost',
             user='root',
             password='12345678',
-            database='momo_database'
+            database='momo_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
         )
 
         if momo_conn.is_connected():
@@ -756,11 +399,30 @@ def clear_momo_products():
 @app.route('/clear-pchome-products', methods=['POST'])
 def clear_pchome_products():
     try:
+        # 建立資料庫（如果不存在）
+        temp_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+        temp_cursor = temp_conn.cursor()
+        temp_cursor.execute("CREATE DATABASE IF NOT EXISTS pchome_database")
+        temp_cursor.close()
+        temp_conn.close()
+
         pchome_conn = mysql.connector.connect(
             host='localhost',
             user='root',
             password='12345678',
-            database='pchome_database'
+            database='pchome_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
         )
 
         if pchome_conn.is_connected():
@@ -790,6 +452,8 @@ def initialize_pchome():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 if __name__ == "__main__":
-    initialize_pchome_database()
-    generate_comparison_html()
+    # 避免在 Flask reloader 重啟時重複執行初始化
+    import os
+    if os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
+        initialize_pchome_database()
     app.run(debug=True, port=5000)
