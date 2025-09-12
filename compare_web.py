@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 def initialize_pchome_database(pchome_file="pchome_products.json"):
     """
-    將 pchome_products.json 的內容插入 pchome_database.pchome_products 表格
+    將 pchome_products.json 的內容插入 pchome_database.pchome_products 表格，插入前清空表格以避免重複
     
     Args:
         pchome_file (str): PChome 商品 JSON 檔案路徑
@@ -34,7 +34,7 @@ def initialize_pchome_database(pchome_file="pchome_products.json"):
             create_pchome_table_query = """
             CREATE TABLE IF NOT EXISTS pchome_products (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                sku VARCHAR(100),
+                sku VARCHAR(100) UNIQUE,
                 title VARCHAR(255),
                 image TEXT,
                 url TEXT,
@@ -46,8 +46,13 @@ def initialize_pchome_database(pchome_file="pchome_products.json"):
             pchome_cursor.execute(create_pchome_table_query)
             print("表格 'pchome_database.pchome_products' 已建立或已存在")
 
+            # 清空表格以避免重複插入
+            pchome_cursor.execute("TRUNCATE TABLE pchome_products")
+            print("已清空 pchome_database.pchome_products 表格")
+
+            # 插入 PChome 商品資料，使用 INSERT IGNORE 避免重複 SKU
             insert_pchome_query = """
-            INSERT INTO pchome_products (sku, title, image, url, platform, connect, price)
+            INSERT IGNORE INTO pchome_products (sku, title, image, url, platform, connect, price)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
             for product in pchome_products:
@@ -249,7 +254,6 @@ def generate_comparison_html(momo_file="momo_products.json", pchome_file="pchome
             const tableBody = document.getElementById('tableBody');
             tableBody.innerHTML = '';
 
-            // 若選擇 all，顯示所有 MOMO 商品，否則顯示單一選定商品
             const filteredMomoProducts = momoIndex === 'all' ? momoProducts : [momoProducts[momoIndex - 1]];
 
             for (let i = 0; i < maxLength; i++) {
@@ -395,7 +399,7 @@ def generate_comparison_html(momo_file="momo_products.json", pchome_file="pchome
                                 image: momoProduct['image_url'] || '無圖片',
                                 url: momoProduct['url'] || '無連結',
                                 platform: momoProduct['platform'] || 'momo',
-                                connect: '',
+                                connect: 'root',
                                 price: momoProduct['price'] || 0,
                                 num: 0 // 初始值，稍後更新
                             });
@@ -545,6 +549,24 @@ def generate_comparison_html(momo_file="momo_products.json", pchome_file="pchome
                     if (data.success) {
                         console.log('pchome_database.pchome_products 已清空');
                         alert('pchome_database.pchome_products 表格已清空！');
+                        // 重新初始化 pchome_database 以恢復數據
+                        fetch('/initialize-pchome', {
+                            method: 'POST'
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log('pchome_database.pchome_products 已重新初始化');
+                                alert('pchome_database.pchome_products 表格已重新初始化！');
+                            } else {
+                                console.error('重新初始化 pchome_database.pchome_products 失敗:', data.error);
+                                alert('重新初始化 pchome_database.pchome_products 失敗：' + data.error);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('重新初始化 pchome_database.pchome_products 請求失敗:', error);
+                            alert('無法連接到伺服器！');
+                        });
                     } else {
                         console.error('清空 pchome_database.pchome_products 失敗:', data.error);
                         alert('清空 pchome_database.pchome_products 失敗：' + data.error);
@@ -757,6 +779,15 @@ def clear_pchome_products():
             pchome_cursor.close()
             pchome_conn.close()
             print("pchome_database 連線已關閉")
+
+@app.route('/initialize-pchome', methods=['POST'])
+def initialize_pchome():
+    try:
+        initialize_pchome_database()
+        return jsonify({'success': True})
+    except Error as e:
+        print(f"MySQL 錯誤: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 if __name__ == "__main__":
     initialize_pchome_database()
