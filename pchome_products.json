@@ -55,600 +55,6 @@
     },
     {
         "id": 7,
-        "title": "ROG Azoth Extreme 旗艦無線三模電競鍵盤(風暴軸/中文/PBT)",
-        "price": 16490,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900J40E6/000001_1754631329.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900J40E6",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900J40E6"
-    },
-    {
-        "id": 8,
-        "title": "Azoth X 無線三模電競鍵盤[NX X-SM軸/X-Snow軸/PBT中文]",
-        "price": 8990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900J5GGX/000001_1756112438.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900J5GGX",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900J5GGX"
-    },
-    {
-        "id": 9,
-        "title": "ROG STRIX SCOPE II RX軸 電競鍵盤 青軸 紅軸 RX光學鍵軸 IP57防水",
-        "price": 4190,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GSVXX/000001_1747648602.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GSVXX",
-        "platform": "pchome",
-        "sku": "DSBC41-A900GSVXX"
-    },
-    {
-        "id": 10,
-        "title": "Falchion RX 矮軸機械式鍵盤-白色/中文",
-        "price": 4990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900IHTHQ/000001_1753065074.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900IHTHQ",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900IHTHQ"
-    },
-    {
-        "id": 11,
-        "title": "ROG Azoth 機械式鍵盤 (NX紅軸/中文/PBT)",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FVL9Y/000001_1750260011.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900FVL9Y",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900FVL9Y"
-    },
-    {
-        "id": 12,
-        "title": "STRIX SCOPE II X 機械電競鍵盤 [NX SM軸/Snow軸/PBT中文]",
-        "price": 3990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900J291T/000001_1753673457.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900J291T",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900J291T"
-    },
-    {
-        "id": 13,
-        "title": "Strix Scope II 96 Wireless 無線機械電競鍵盤 [白色/NX SW軸/三模連接/PBT中文]",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HBEKC/000001_1711938826.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HBEKC",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HBEKC"
-    },
-    {
-        "id": 14,
-        "title": "ROG Azoth 機械式鍵盤 (NX茶軸/中文/PBT)",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FVL9N/000001_1672816373.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900FVL9N",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900FVL9N"
-    },
-    {
-        "id": 15,
-        "title": "ROG Azoth 機械式鍵盤 (NX青軸/中文/PBT)",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FVL9B/000001_1750260049.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900FVL9B",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900FVL9B"
-    },
-    {
-        "id": 16,
-        "title": "Strix Scope II RX 96 Wireless 無線電競鍵盤 [RX紅軸/三模連接/PBT中文]",
-        "price": 5990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HQTPU/000001_1724382840.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HQTPU",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HQTPU"
-    },
-    {
-        "id": 17,
-        "title": "Falchion ACE HFX 65% 機械式鍵盤 (磁軸/中文)",
-        "price": 6490,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900I05OA/000001_1729653704.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900I05OA",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900I05OA"
-    },
-    {
-        "id": 18,
-        "title": "Azoth 無線電競機械鍵盤",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHNVA900FXONC/000001_1673591374.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHNV-A900FXONC",
-        "platform": "pchome",
-        "sku": "DCAHNV-A900FXONC"
-    },
-    {
-        "id": 19,
-        "title": "Strix Scope II 96 Wireless 無線機械電競鍵盤 [NX SM軸/三模連接/PBT中文]",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HB8N1/000001_1750259559.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HB8N1",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HB8N1"
-    },
-    {
-        "id": 20,
-        "title": "Strix Scope II 96 Wireless 無線機械電競鍵盤 [NX SM軸/三模連接/PBT中文]",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900GL0DY/000001_1750259832.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900GL0DY",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900GL0DY"
-    },
-    {
-        "id": 21,
-        "title": "Falchion RX 矮軸機械式鍵盤-白色/中文",
-        "price": 4990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900H2GTS/000001_1750259587.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900H2GTS",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900H2GTS"
-    },
-    {
-        "id": 22,
-        "title": "Strix Scope II 機械電競鍵盤 [RX PBT中文]",
-        "price": 4190,
-        "image_url": "https://cs.ecimg.tw/items/DCAHRQA900GNTAO/000001_1694672587.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHRQ-A900GNTAO",
-        "platform": "pchome",
-        "sku": "DCAHRQ-A900GNTAO"
-    },
-    {
-        "id": 23,
-        "title": "Strix Scope II RX 96 Wireless 無線電競鍵盤 [RX青軸/三模連接/PBT中文]",
-        "price": 5990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HQTPC/000001_1724382474.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HQTPC",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HQTPC"
-    },
-    {
-        "id": 24,
-        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤/雪軸",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GH9KK/000001_1751504875.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GH9KK",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900GH9KK"
-    },
-    {
-        "id": 25,
-        "title": "ROG Scope II RX PBT鍵盤-紅軸",
-        "price": 4190,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GMEBQ/000001_1756943844.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GMEBQ",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900GMEBQ"
-    },
-    {
-        "id": 26,
-        "title": "ROG Azoth 客製化無線三模電競鍵盤 白色 三模式連接 人體工學NX 機械軸",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GROCT/000001_1747648483.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GROCT",
-        "platform": "pchome",
-        "sku": "DSBC41-A900GROCT"
-    },
-    {
-        "id": 27,
-        "title": "Strix Scope II RX 96 Wireless 無線電競鍵盤 [RX青軸/三模連接/PBT中文/白]",
-        "price": 5990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HQTOX/000001_1745288966.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HQTOX",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HQTOX"
-    },
-    {
-        "id": 28,
-        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤 白色/雪軸",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900HEX57/000001_1744855991.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900HEX57",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900HEX57"
-    },
-    {
-        "id": 29,
-        "title": "ROG Strix Scope II 96 Wireless 電競鍵盤 (SNOW軸)",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DCANO7A900GGEMM/000001_1688456239.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCANO7-A900GGEMM",
-        "platform": "pchome",
-        "sku": "DCANO7-A900GGEMM"
-    },
-    {
-        "id": 30,
-        "title": "ROG Azoth PBT 機械式鍵盤 中文/茶軸",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900FX3RX/000001_1756949787.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900FX3RX",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900FX3RX"
-    },
-    {
-        "id": 31,
-        "title": "Falchion RX 矮軸 65% 無線電競鍵盤",
-        "price": 4990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900H864B/000001_1708161023.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900H864B",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900H864B"
-    },
-    {
-        "id": 32,
-        "title": "ROG Azoth PBT 機械式鍵盤 中文/青軸",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900FX3RW/000001_1756943486.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900FX3RW",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900FX3RW"
-    },
-    {
-        "id": 33,
-        "title": "Strix Scope II 96 Wireless 無線機械電競鍵盤-白色",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DCANCAA900HDMBE/000001_1712740108.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCANCA-A900HDMBE",
-        "platform": "pchome",
-        "sku": "DCANCA-A900HDMBE"
-    },
-    {
-        "id": 34,
-        "title": "Strix Scope II RX 96 Wireless 無線電競鍵盤 [RX紅軸/三模連接/PBT中文/白]",
-        "price": 5990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HQTNN/000001_1724383248.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HQTNN",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HQTNN"
-    },
-    {
-        "id": 35,
-        "title": "Azoth 無線電競機械鍵盤-白色",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHRQA900GX9LY/000001_1700115739.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHRQ-A900GX9LY",
-        "platform": "pchome",
-        "sku": "DCAHRQ-A900GX9LY"
-    },
-    {
-        "id": 36,
-        "title": "Strix Scope II 96 RX Wireless 電競鍵盤",
-        "price": 5990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900I0AG8/000001_1729666885.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900I0AG8",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900I0AG8"
-    },
-    {
-        "id": 37,
-        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤 白色/青軸",
-        "price": 5990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HS9V8/000001_1756948105.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HS9V8",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HS9V8"
-    },
-    {
-        "id": 38,
-        "title": "ROG Scope II RX PBT鍵盤-青軸",
-        "price": 4190,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GMEAY/000001_1756944150.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GMEAY",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900GMEAY"
-    },
-    {
-        "id": 39,
-        "title": "ROG 華碩 Azoth Extreme 旗艦電競鍵盤",
-        "price": 16490,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HQYVV/000001_1724317241.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HQYVV",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HQYVV"
-    },
-    {
-        "id": 40,
-        "title": "ROG STRIX SCOPE II 96 Wireless White Storm 風暴軸 PBT 無線電競鍵盤",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HCSLN/000001_1749464659.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HCSLN",
-        "platform": "pchome",
-        "sku": "DSBC41-A900HCSLN"
-    },
-    {
-        "id": 41,
-        "title": "ROG Azoth PBT 月光白 機械式鍵盤 中文/青軸",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GT9PG/000001_1756949275.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GT9PG",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900GT9PG"
-    },
-    {
-        "id": 42,
-        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤 白色/風暴軸",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900HEX49/000001_1756949412.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900HEX49",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900HEX49"
-    },
-    {
-        "id": 43,
-        "title": "ROG Azoth 客製化無線三模電競鍵盤 三模式連接 人體工學/NX 機械軸",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GEDET/000001_1747648533.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GEDET",
-        "platform": "pchome",
-        "sku": "DSBC41-A900GEDET"
-    },
-    {
-        "id": 44,
-        "title": "ROG STRIX SCOPE II 96 Wireless White Snow雪軸 PBT 無線電競鍵盤",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HCSLG/000001_1747627510.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HCSLG",
-        "platform": "pchome",
-        "sku": "DSBC41-A900HCSLG"
-    },
-    {
-        "id": 45,
-        "title": "【ASUS 華碩】ROG Strix Scope II 96 Wireless 無線電競鍵盤 白色/紅軸",
-        "price": 5990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HSDHO/000001_1756944116.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HSDHO",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HSDHO"
-    },
-    {
-        "id": 46,
-        "title": "ROG Falchion RX 矮軸 65% 無線電競鍵盤 白色/青軸/中文",
-        "price": 4990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900H4ZX6/000001_1756950311.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900H4ZX6",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900H4ZX6"
-    },
-    {
-        "id": 47,
-        "title": "ROG Falchion 65% RX矮軸 三模電競鍵盤 光學矮軸 omni接收器 LED指示燈",
-        "price": 4990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900H3Z9Z/000001_1747627633.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900H3Z9Z",
-        "platform": "pchome",
-        "sku": "DSBC41-A900H3Z9Z"
-    },
-    {
-        "id": 48,
-        "title": "ROG Azoth 客製化無線三模電競鍵盤 白 三模式連接 人體工學/NX 機械軸",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GSVXK/000001_1747648567.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GSVXK",
-        "platform": "pchome",
-        "sku": "DSBC41-A900GSVXK"
-    },
-    {
-        "id": 49,
-        "title": "ROG SCOPE II NX PBT鍵盤 - NX Storm軸",
-        "price": 3990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GTF9R/000001_1756943217.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GTF9R",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900GTF9R"
-    },
-    {
-        "id": 50,
-        "title": "【南紡購物中心】 ROG Azoth 客製化無線三模電競鍵盤 白色4/11-6/30登錄即送 ROG NX 機械軸組* 5",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HG35F/000001_1714730419.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HG35F",
-        "platform": "pchome",
-        "sku": "DSBC41-A900HG35F"
-    },
-    {
-        "id": 51,
-        "title": "【ASUS 】ROG STRIX SCOPE NX 紅軸 電競鍵盤",
-        "price": 3990,
-        "image_url": "https://cs.ecimg.tw/items/DCBX09A900GL9IQ/000001_1692342939.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBX09-A900GL9IQ",
-        "platform": "pchome",
-        "sku": "DCBX09-A900GL9IQ"
-    },
-    {
-        "id": 52,
-        "title": "ROG Azoth PBT 月光白 機械式鍵盤 中文/紅軸",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GT9P5/000001_1756951718.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GT9P5",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900GT9P5"
-    },
-    {
-        "id": 53,
-        "title": "STRIX SCOPE NX TKL 80% RGB機械式電競鍵盤 (NX紅軸/月光白)",
-        "price": 3190,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900C0WY3/000001_1750260158.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900C0WY3",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900C0WY3"
-    },
-    {
-        "id": 54,
-        "title": "Strix Scope RX 光學機械電競鍵盤-青軸",
-        "price": 3190,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900BDTIU/000001_1621652827.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900BDTIU",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900BDTIU"
-    },
-    {
-        "id": 55,
-        "title": "STRIX SCOPE NX TKL 80% RGB機械式電競鍵盤 (NX青軸/月光白)",
-        "price": 3190,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900BRMQW/000001_1750057650.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900BRMQW",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900BRMQW"
-    },
-    {
-        "id": 56,
-        "title": "【ASUS 華碩】ROG 華碩Falchion ACE HFX 65% 機械式鍵盤-磁軸/中文",
-        "price": 6490,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HWBI0/000001_1756944077.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HWBI0",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HWBI0"
-    },
-    {
-        "id": 57,
-        "title": "ROG Strix Scope NX TKL Moonlight White 月光白 電競鍵盤",
-        "price": 3190,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900ESTMK/000001_1732115970.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900ESTMK",
-        "platform": "pchome",
-        "sku": "DSBC41-A900ESTMK"
-    },
-    {
-        "id": 58,
-        "title": "ROG Azoth 客製化無線三模電競鍵盤 三模式連接 人體工學 NX 機械軸",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900FWRGJ/000001_1747650089.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900FWRGJ",
-        "platform": "pchome",
-        "sku": "DSBC41-A900FWRGJ"
-    },
-    {
-        "id": 59,
-        "title": "ROG Falchion RX 矮軸 65% 無線電競鍵盤 白色/紅軸",
-        "price": 4990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900HC9QG/000001_1756944007.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900HC9QG",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900HC9QG"
-    },
-    {
-        "id": 60,
-        "title": "【南紡購物中心】 ROG   Strix Scope NX TKL Moonlight White 月光白 電競鍵盤 80%鍵盤",
-        "price": 3190,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900ESTC3/000001_1722492686.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900ESTC3",
-        "platform": "pchome",
-        "sku": "DSBC41-A900ESTC3"
-    },
-    {
-        "id": 61,
-        "title": "ROG Strix Scope II 96 Wireless 電競鍵盤 -STORM軸",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DCANO7A900GMJHB/000001_1693540360.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCANO7-A900GMJHB",
-        "platform": "pchome",
-        "sku": "DCANO7-A900GMJHB"
-    },
-    {
-        "id": 62,
-        "title": "Strix Scope NX TKL 機械式鍵盤(NX青軸/月光白)",
-        "price": 3190,
-        "image_url": "https://cs.ecimg.tw/items/DCAHRQA900GHEYF/000001_1689144741.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHRQ-A900GHEYF",
-        "platform": "pchome",
-        "sku": "DCAHRQ-A900GHEYF"
-    },
-    {
-        "id": 63,
-        "title": "【南紡購物中心】 ROG   Strix Scope NX TKL Moonlight White 月光白 電競鍵盤 80%鍵盤",
-        "price": 3190,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900C16EL/000001_1648699684.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900C16EL",
-        "platform": "pchome",
-        "sku": "DSBC41-A900C16EL"
-    },
-    {
-        "id": 64,
-        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤 青軸",
-        "price": 5990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HS9VT/000001_1756943856.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HS9VT",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HS9VT"
-    },
-    {
-        "id": 65,
-        "title": "ROG STRIX SCOPE II 96 Wireless NX Storm風暴軸 PBT 無線電競鍵盤",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GM1MU/000001_1750125034.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GM1MU",
-        "platform": "pchome",
-        "sku": "DSBC41-A900GM1MU"
-    },
-    {
-        "id": 66,
-        "title": "ROG Azoth PBT 月光白 機械式鍵盤 中文/茶軸",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GT9PH/000001_1756949994.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GT9PH",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900GT9PH"
-    },
-    {
-        "id": 67,
-        "title": "ROG Strix Scope RX RGB 光學機械鍵盤",
-        "price": 3190,
-        "image_url": "https://cs.ecimg.tw/items/DCAHNVA900FVSDS/000001_1672206645.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHNV-A900FVSDS",
-        "platform": "pchome",
-        "sku": "DCAHNV-A900FVSDS"
-    },
-    {
-        "id": 68,
-        "title": "ROG STRIX SCOPE II 96 Wireless NX Snow 雪軸 PBT 三模無線電競鍵盤",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GSVXL/000001_1751446481.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GSVXL",
-        "platform": "pchome",
-        "sku": "DSBC41-A900GSVXL"
-    },
-    {
-        "id": 69,
-        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤 紅軸",
-        "price": 5990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HS9VB/000001_1756944130.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HS9VB",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HS9VB"
-    },
-    {
-        "id": 70,
-        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤/灰軸",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GM9OX/000001_1756944170.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GM9OX",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900GM9OX"
-    },
-    {
-        "id": 71,
-        "title": "ROG STRIX SCOPE II 96 Wireless NX軸 雪軸 Snow軸 PBT中文 無線鍵盤",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GMVDG/000001_1751446689.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GMVDG",
-        "platform": "pchome",
-        "sku": "DSBC41-A900GMVDG"
-    },
-    {
-        "id": 72,
-        "title": "ROG STRIX SCOPE II 96 Wireless NX Storm軸 風暴軸 PBT 三模無線鍵盤",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GSVXV/000001_1750125108.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GSVXV",
-        "platform": "pchome",
-        "sku": "DSBC41-A900GSVXV"
-    },
-    {
-        "id": 73,
         "title": "Falchion ACE 65%機械式鍵盤-紅軸/中文",
         "price": 2990,
         "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FODPG/000001_1756958773.jpg",
@@ -657,133 +63,7 @@
         "sku": "DCAHH2-A900FODPG"
     },
     {
-        "id": 74,
-        "title": "Falchion ACE 65%機械式鍵盤-茶軸/中文",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FODPX/000001_1666769178.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900FODPX",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900FODPX"
-    },
-    {
-        "id": 75,
-        "title": "Falchion ACE 65%機械式鍵盤-青軸/中文",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FODGZ/000001_1756968085.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900FODGZ",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900FODGZ"
-    },
-    {
-        "id": 76,
-        "title": "ROG Falchion Ace 65% 緊湊型遊戲鍵盤 青紅茶軸/雙USB-C/人體工學/NX機械軸",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GEQFD/000001_1747732828.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GEQFD",
-        "platform": "pchome",
-        "sku": "DSBC41-A900GEQFD"
-    },
-    {
-        "id": 77,
-        "title": "ROG Strix Scope NX RGB 機械式電競鍵盤 紅軸",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900BU0YB/000001_1756944238.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900BU0YB",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900BU0YB"
-    },
-    {
-        "id": 78,
-        "title": "ROG Strix Scope NX RGB 機械式電競鍵盤 青軸",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900BU0YA/000001_1756944228.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900BU0YA",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900BU0YA"
-    },
-    {
-        "id": 79,
-        "title": "ROG Falchion ACE 65% 機械式鍵盤",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHRQA900GF03E/000001_1686813998.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHRQ-A900GF03E",
-        "platform": "pchome",
-        "sku": "DCAHRQ-A900GF03E"
-    },
-    {
-        "id": 80,
-        "title": "ROG STRIX SCOPE NX 機械電競鍵盤-紅軸",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DCANO7A900BV5YS/000001_1634024160.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCANO7-A900BV5YS",
-        "platform": "pchome",
-        "sku": "DCANO7-A900BV5YS"
-    },
-    {
-        "id": 81,
-        "title": "ROG Falchion Ace 65% 緊湊型遊戲鍵盤 青紅茶軸/雙USB-C/人體工學/NX機械軸",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900FOVTN/000001_1747732762.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900FOVTN",
-        "platform": "pchome",
-        "sku": "DSBC41-A900FOVTN"
-    },
-    {
-        "id": 82,
-        "title": "ROG Falchion Ace 65%機械式鍵盤 青軸/白色",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900FYVL1/000001_1756947103.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900FYVL1",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900FYVL1"
-    },
-    {
-        "id": 83,
-        "title": "ROG Falchion Ace 65%機械式鍵盤 紅軸/白色",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900FZ0L5/000001_1756948428.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900FZ0L5",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900FZ0L5"
-    },
-    {
-        "id": 84,
-        "title": "ROG Falchion Ace 65%機械式鍵盤 茶軸/白色",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900FYVL2/000001_1756948487.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900FYVL2",
-        "platform": "pchome",
-        "sku": "DCBE2G-A900FYVL2"
-    },
-    {
-        "id": 85,
-        "title": "ROG STRIX SCOPE NX 電競鍵盤 青 紅軸/NX機械軸/隱形鍵/快速切換開關",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900BTE8W/000001_1747732795.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900BTE8W",
-        "platform": "pchome",
-        "sku": "DSBC41-A900BTE8W"
-    },
-    {
-        "id": 86,
-        "title": "ROG STRIX SCOPE NX 電競鍵盤 NX機械軸/隱形鍵/快速切換開關",
-        "price": 2990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900ESTVA/000001_1747732746.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900ESTVA",
-        "platform": "pchome",
-        "sku": "DSBC41-A900ESTVA"
-    },
-    {
-        "id": 87,
-        "title": "ASUS TUF GAMING K3 Gen II 機械式電競鍵盤(中文ABS鍵帽/96%配列/吸音棉減震墊)",
-        "price": 2490,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HF1TY/000001_1714374644.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HF1TY",
-        "platform": "pchome",
-        "sku": "DCAHH2-A900HF1TY"
-    },
-    {
-        "id": 88,
+        "id": 8,
         "title": "Strix Scope II 96 Wireless 無線機械電競鍵盤 [NX Snow軸/三模連接/PBT中文]",
         "price": 5490,
         "image_url": "https://cs.ecimg.tw/items/DCAHH2A900GFTV2/000001_1750259961.jpg",
@@ -792,111 +72,831 @@
         "sku": "DCAHH2-A900GFTV2"
     },
     {
-        "id": 89,
+        "id": 9,
+        "title": "ROG Azoth Extreme 旗艦無線三模電競鍵盤(風暴軸/中文/PBT)",
+        "price": 16490,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900J40E6/000001_1754631329.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900J40E6",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900J40E6"
+    },
+    {
+        "id": 10,
+        "title": "STRIX SCOPE NX TKL 80% RGB機械式電競鍵盤 (NX紅軸/月光白)",
+        "price": 3190,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900C0WY3/000001_1750260158.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900C0WY3",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900C0WY3"
+    },
+    {
+        "id": 11,
+        "title": "ASUS TUF GAMING K3 Gen II 機械式電競鍵盤(中文ABS鍵帽/96%配列/吸音棉減震墊)",
+        "price": 2490,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HF1TY/000001_1714374644.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HF1TY",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HF1TY"
+    },
+    {
+        "id": 12,
+        "title": "ROG STRIX SCOPE II RX軸 電競鍵盤 青軸 紅軸 RX光學鍵軸 IP57防水",
+        "price": 4190,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GSVXX/000001_1747648602.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GSVXX",
+        "platform": "pchome",
+        "sku": "DSBC41-A900GSVXX"
+    },
+    {
+        "id": 13,
+        "title": "Azoth X 無線三模電競鍵盤[NX X-SM軸/X-Snow軸/PBT中文]",
+        "price": 8990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900J5GGX/000001_1756112438.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900J5GGX",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900J5GGX"
+    },
+    {
+        "id": 14,
+        "title": "Falchion ACE 65%機械式鍵盤-茶軸/中文",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FODPX/000001_1666769178.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900FODPX",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900FODPX"
+    },
+    {
+        "id": 15,
+        "title": "STRIX SCOPE II X 機械電競鍵盤 [NX SM軸/Snow軸/PBT中文]",
+        "price": 3990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900J291T/000001_1753673457.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900J291T",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900J291T"
+    },
+    {
+        "id": 16,
+        "title": "ROG Azoth 機械式鍵盤 (NX紅軸/中文/PBT)",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FVL9Y/000001_1750260011.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900FVL9Y",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900FVL9Y"
+    },
+    {
+        "id": 17,
+        "title": "Strix Scope RX 光學機械電競鍵盤-青軸",
+        "price": 3190,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900BDTIU/000001_1621652827.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900BDTIU",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900BDTIU"
+    },
+    {
+        "id": 18,
+        "title": "Falchion RX 矮軸機械式鍵盤-白色/中文",
+        "price": 4990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900IHTHQ/000001_1753065074.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900IHTHQ",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900IHTHQ"
+    },
+    {
+        "id": 19,
+        "title": "Strix Scope II 96 Wireless 無線機械電競鍵盤 [白色/NX SW軸/三模連接/PBT中文]",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HBEKC/000001_1711938826.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HBEKC",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HBEKC"
+    },
+    {
+        "id": 20,
+        "title": "ROG Azoth 機械式鍵盤 (NX茶軸/中文/PBT)",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FVL9N/000001_1672816373.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900FVL9N",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900FVL9N"
+    },
+    {
+        "id": 21,
+        "title": "STRIX SCOPE NX TKL 80% RGB機械式電競鍵盤 (NX青軸/月光白)",
+        "price": 3190,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900BRMQW/000001_1750057650.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900BRMQW",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900BRMQW"
+    },
+    {
+        "id": 22,
+        "title": "ROG Azoth 機械式鍵盤 (NX青軸/中文/PBT)",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FVL9B/000001_1750260049.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900FVL9B",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900FVL9B"
+    },
+    {
+        "id": 23,
+        "title": "Strix Scope II RX 96 Wireless 無線電競鍵盤 [RX紅軸/三模連接/PBT中文]",
+        "price": 5990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HQTPU/000001_1724382840.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HQTPU",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HQTPU"
+    },
+    {
+        "id": 24,
+        "title": "Falchion ACE HFX 65% 機械式鍵盤 (磁軸/中文)",
+        "price": 6490,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900I05OA/000001_1729653704.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900I05OA",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900I05OA"
+    },
+    {
+        "id": 25,
+        "title": "Falchion ACE 65%機械式鍵盤-青軸/中文",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900FODGZ/000001_1756968085.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900FODGZ",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900FODGZ"
+    },
+    {
+        "id": 26,
+        "title": "Strix Scope II 96 Wireless 無線機械電競鍵盤 [NX SM軸/三模連接/PBT中文]",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HB8N1/000001_1750259559.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HB8N1",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HB8N1"
+    },
+    {
+        "id": 27,
+        "title": "ROG Falchion Ace 65% 緊湊型遊戲鍵盤 青紅茶軸/雙USB-C/人體工學/NX機械軸",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GEQFD/000001_1747732828.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GEQFD",
+        "platform": "pchome",
+        "sku": "DSBC41-A900GEQFD"
+    },
+    {
+        "id": 28,
+        "title": "Azoth 無線電競機械鍵盤",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHNVA900FXONC/000001_1673591374.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHNV-A900FXONC",
+        "platform": "pchome",
+        "sku": "DCAHNV-A900FXONC"
+    },
+    {
+        "id": 29,
+        "title": "【ASUS 華碩】ROG 華碩Falchion ACE HFX 65% 機械式鍵盤-磁軸/中文",
+        "price": 6490,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HWBI0/000001_1757547707.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HWBI0",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HWBI0"
+    },
+    {
+        "id": 30,
+        "title": "Strix Scope II 96 Wireless 無線機械電競鍵盤 [NX SM軸/三模連接/PBT中文]",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900GL0DY/000001_1750259832.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900GL0DY",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900GL0DY"
+    },
+    {
+        "id": 31,
+        "title": "Falchion RX 矮軸機械式鍵盤-白色/中文",
+        "price": 4990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900H2GTS/000001_1750259587.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900H2GTS",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900H2GTS"
+    },
+    {
+        "id": 32,
+        "title": "Strix Scope II RX 96 Wireless 無線電競鍵盤 [RX青軸/三模連接/PBT中文/白]",
+        "price": 5990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HQTOX/000001_1745288966.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HQTOX",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HQTOX"
+    },
+    {
+        "id": 33,
+        "title": "ROG Strix Scope NX RGB 機械式電競鍵盤 紅軸",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900BU0YB/000001_1757551897.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900BU0YB",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900BU0YB"
+    },
+    {
+        "id": 34,
+        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤/雪軸",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GH9KK/000001_1751504875.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GH9KK",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900GH9KK"
+    },
+    {
+        "id": 35,
+        "title": "Strix Scope II 機械電競鍵盤 [RX PBT中文]",
+        "price": 4190,
+        "image_url": "https://cs.ecimg.tw/items/DCAHRQA900GNTAO/000001_1694672587.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHRQ-A900GNTAO",
+        "platform": "pchome",
+        "sku": "DCAHRQ-A900GNTAO"
+    },
+    {
+        "id": 36,
+        "title": "ROG Scope II RX PBT鍵盤-紅軸",
+        "price": 4190,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GMEBQ/000001_1757548398.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GMEBQ",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900GMEBQ"
+    },
+    {
+        "id": 37,
+        "title": "ROG Azoth 客製化無線三模電競鍵盤 白色 三模式連接 人體工學NX 機械軸",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GROCT/000001_1747648483.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GROCT",
+        "platform": "pchome",
+        "sku": "DSBC41-A900GROCT"
+    },
+    {
+        "id": 38,
+        "title": "Strix Scope II RX 96 Wireless 無線電競鍵盤 [RX青軸/三模連接/PBT中文]",
+        "price": 5990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HQTPC/000001_1724382474.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HQTPC",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HQTPC"
+    },
+    {
+        "id": 39,
+        "title": "ROG Strix Scope NX RGB 機械式電競鍵盤 青軸",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900BU0YA/000001_1757550130.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900BU0YA",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900BU0YA"
+    },
+    {
+        "id": 40,
+        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤 白色/雪軸",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900HEX57/000001_1744855991.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900HEX57",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900HEX57"
+    },
+    {
+        "id": 41,
+        "title": "Strix Scope II RX 96 Wireless 無線電競鍵盤 [RX紅軸/三模連接/PBT中文/白]",
+        "price": 5990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HQTNN/000001_1724383248.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HQTNN",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HQTNN"
+    },
+    {
+        "id": 42,
+        "title": "Falchion RX 矮軸 65% 無線電競鍵盤",
+        "price": 4990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900H864B/000001_1708161023.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900H864B",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900H864B"
+    },
+    {
+        "id": 43,
+        "title": "ROG Azoth PBT 機械式鍵盤 中文/茶軸",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900FX3RX/000001_1757554482.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900FX3RX",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900FX3RX"
+    },
+    {
+        "id": 44,
+        "title": "ROG Falchion ACE 65% 機械式鍵盤",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHRQA900GF03E/000001_1686813998.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHRQ-A900GF03E",
+        "platform": "pchome",
+        "sku": "DCAHRQ-A900GF03E"
+    },
+    {
+        "id": 45,
+        "title": "ROG STRIX SCOPE NX 機械電競鍵盤-紅軸",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DCANO7A900BV5YS/000001_1634024160.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCANO7-A900BV5YS",
+        "platform": "pchome",
+        "sku": "DCANO7-A900BV5YS"
+    },
+    {
+        "id": 46,
+        "title": "ROG Azoth PBT 機械式鍵盤 中文/青軸",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900FX3RW/000001_1757552334.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900FX3RW",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900FX3RW"
+    },
+    {
+        "id": 47,
+        "title": "ROG Strix Scope II 96 Wireless 電競鍵盤 (SNOW軸)",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DCANO7A900GGEMM/000001_1688456239.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCANO7-A900GGEMM",
+        "platform": "pchome",
+        "sku": "DCANO7-A900GGEMM"
+    },
+    {
+        "id": 48,
+        "title": "ROG Azoth 客製化無線三模電競鍵盤 三模式連接 人體工學 NX 機械軸",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900FWRGJ/000001_1747650089.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900FWRGJ",
+        "platform": "pchome",
+        "sku": "DSBC41-A900FWRGJ"
+    },
+    {
+        "id": 49,
+        "title": "ROG Falchion RX 矮軸 65% 無線電競鍵盤 白色/紅軸",
+        "price": 4990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900HC9QG/000001_1757552448.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900HC9QG",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900HC9QG"
+    },
+    {
+        "id": 50,
+        "title": "Azoth 無線電競機械鍵盤-白色",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHRQA900GX9LY/000001_1700115739.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHRQ-A900GX9LY",
+        "platform": "pchome",
+        "sku": "DCAHRQ-A900GX9LY"
+    },
+    {
+        "id": 51,
+        "title": "【南紡購物中心】 ROG   Strix Scope NX TKL Moonlight White 月光白 電競鍵盤 80%鍵盤",
+        "price": 3190,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900ESTC3/000001_1722492686.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900ESTC3",
+        "platform": "pchome",
+        "sku": "DSBC41-A900ESTC3"
+    },
+    {
+        "id": 52,
+        "title": "ROG Falchion Ace 65% 緊湊型遊戲鍵盤 青紅茶軸/雙USB-C/人體工學/NX機械軸",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900FOVTN/000001_1747732762.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900FOVTN",
+        "platform": "pchome",
+        "sku": "DSBC41-A900FOVTN"
+    },
+    {
+        "id": 53,
+        "title": "Strix Scope II 96 Wireless 無線機械電競鍵盤-白色",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DCANCAA900HDMBE/000001_1712740108.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCANCA-A900HDMBE",
+        "platform": "pchome",
+        "sku": "DCANCA-A900HDMBE"
+    },
+    {
+        "id": 54,
+        "title": "ROG Strix Scope NX TKL Moonlight White 月光白 電競鍵盤",
+        "price": 3190,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900ESTMK/000001_1732115970.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900ESTMK",
+        "platform": "pchome",
+        "sku": "DSBC41-A900ESTMK"
+    },
+    {
+        "id": 55,
+        "title": "Strix Scope II 96 RX Wireless 電競鍵盤",
+        "price": 5990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900I0AG8/000001_1729666885.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900I0AG8",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900I0AG8"
+    },
+    {
+        "id": 56,
+        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤 白色/青軸",
+        "price": 5990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HS9V8/000001_1757549138.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HS9V8",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HS9V8"
+    },
+    {
+        "id": 57,
+        "title": "Strix Scope NX TKL 機械式鍵盤(NX青軸/月光白)",
+        "price": 3190,
+        "image_url": "https://cs.ecimg.tw/items/DCAHRQA900GHEYF/000001_1689144741.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHRQ-A900GHEYF",
+        "platform": "pchome",
+        "sku": "DCAHRQ-A900GHEYF"
+    },
+    {
+        "id": 58,
+        "title": "ROG STRIX SCOPE II 96 Wireless White Snow雪軸 PBT 無線電競鍵盤",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HCSLG/000001_1747627510.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HCSLG",
+        "platform": "pchome",
+        "sku": "DSBC41-A900HCSLG"
+    },
+    {
+        "id": 59,
+        "title": "ROG Scope II RX PBT鍵盤-青軸",
+        "price": 4190,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GMEAY/000001_1757551883.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GMEAY",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900GMEAY"
+    },
+    {
+        "id": 60,
+        "title": "ROG Strix Scope II 96 Wireless 電競鍵盤 -STORM軸",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DCANO7A900GMJHB/000001_1693540360.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCANO7-A900GMJHB",
+        "platform": "pchome",
+        "sku": "DCANO7-A900GMJHB"
+    },
+    {
+        "id": 61,
+        "title": "ROG 華碩 Azoth Extreme 旗艦電競鍵盤",
+        "price": 16490,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HQYVV/000001_1724317241.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HQYVV",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HQYVV"
+    },
+    {
+        "id": 62,
+        "title": "ROG Falchion Ace 65%機械式鍵盤 青軸/白色",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900FYVL1/000001_1757554413.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900FYVL1",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900FYVL1"
+    },
+    {
+        "id": 63,
+        "title": "ROG STRIX SCOPE II 96 Wireless White Storm 風暴軸 PBT 無線電競鍵盤",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HCSLN/000001_1749464659.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HCSLN",
+        "platform": "pchome",
+        "sku": "DSBC41-A900HCSLN"
+    },
+    {
+        "id": 64,
+        "title": "【南紡購物中心】 ROG   Strix Scope NX TKL Moonlight White 月光白 電競鍵盤 80%鍵盤",
+        "price": 3190,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900C16EL/000001_1648699684.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900C16EL",
+        "platform": "pchome",
+        "sku": "DSBC41-A900C16EL"
+    },
+    {
+        "id": 65,
+        "title": "ROG Falchion Ace 65%機械式鍵盤 紅軸/白色",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900FZ0L5/000001_1757553936.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900FZ0L5",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900FZ0L5"
+    },
+    {
+        "id": 66,
+        "title": "ROG STRIX SCOPE II 96 Wireless NX Storm風暴軸 PBT 無線電競鍵盤",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GM1MU/000001_1750125034.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GM1MU",
+        "platform": "pchome",
+        "sku": "DSBC41-A900GM1MU"
+    },
+    {
+        "id": 67,
+        "title": "ROG Azoth PBT 月光白 機械式鍵盤 中文/青軸",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GT9PG/000001_1757556043.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GT9PG",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900GT9PG"
+    },
+    {
+        "id": 68,
+        "title": "ROG Azoth PBT 月光白 機械式鍵盤 中文/茶軸",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GT9PH/000001_1757553951.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GT9PH",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900GT9PH"
+    },
+    {
+        "id": 69,
+        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤 青軸",
+        "price": 5990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HS9VT/000001_1757552343.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HS9VT",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HS9VT"
+    },
+    {
+        "id": 70,
+        "title": "ROG Azoth 客製化無線三模電競鍵盤 三模式連接 人體工學/NX 機械軸",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GEDET/000001_1747648533.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GEDET",
+        "platform": "pchome",
+        "sku": "DSBC41-A900GEDET"
+    },
+    {
+        "id": 71,
+        "title": "ROG STRIX SCOPE II 96 Wireless NX Snow 雪軸 PBT 三模無線電競鍵盤",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GSVXL/000001_1751446481.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GSVXL",
+        "platform": "pchome",
+        "sku": "DSBC41-A900GSVXL"
+    },
+    {
+        "id": 72,
+        "title": "【ASUS 華碩】ROG Strix Scope II 96 Wireless 無線電競鍵盤 白色/紅軸",
+        "price": 5990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HSDHO/000001_1757555212.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HSDHO",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HSDHO"
+    },
+    {
+        "id": 73,
+        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤 白色/風暴軸",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900HEX49/000001_1757549168.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900HEX49",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900HEX49"
+    },
+    {
+        "id": 74,
+        "title": "ROG Strix Scope RX RGB 光學機械鍵盤",
+        "price": 3190,
+        "image_url": "https://cs.ecimg.tw/items/DCAHNVA900FVSDS/000001_1672206645.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHNV-A900FVSDS",
+        "platform": "pchome",
+        "sku": "DCAHNV-A900FVSDS"
+    },
+    {
+        "id": 75,
+        "title": "ROG Falchion RX 矮軸 65% 無線電競鍵盤 白色/青軸/中文",
+        "price": 4990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900H4ZX6/000001_1757553867.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900H4ZX6",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900H4ZX6"
+    },
+    {
+        "id": 76,
+        "title": "ROG Falchion 65% RX矮軸 三模電競鍵盤 光學矮軸 omni接收器 LED指示燈",
+        "price": 4990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900H3Z9Z/000001_1747627633.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900H3Z9Z",
+        "platform": "pchome",
+        "sku": "DSBC41-A900H3Z9Z"
+    },
+    {
+        "id": 77,
         "title": "ROG Strix Scope NX TKL Moonlight White 機械式鍵盤 青軸/月光白",
         "price": 3190,
-        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900BU0XS/000001_1756951547.jpg",
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900BU0XS/000001_1757548832.jpg",
         "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900BU0XS",
         "platform": "pchome",
         "sku": "DCBE2G-A900BU0XS"
     },
     {
-        "id": 90,
-        "title": "Strix Scope II 機械電競鍵盤 [NX SM軸/Snow軸/PBT中文]",
-        "price": 3990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900GL0LW/000001_1750259751.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900GL0LW",
+        "id": 78,
+        "title": "ROG Azoth 客製化無線三模電競鍵盤 白 三模式連接 人體工學/NX 機械軸",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GSVXK/000001_1747648567.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GSVXK",
         "platform": "pchome",
-        "sku": "DCAHH2-A900GL0LW"
+        "sku": "DSBC41-A900GSVXK"
+    },
+    {
+        "id": 79,
+        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤/灰軸",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GM9OX/000001_1757550648.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GM9OX",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900GM9OX"
+    },
+    {
+        "id": 80,
+        "title": "ROG Strix Scope II 96 Wireless 無線電競鍵盤 紅軸",
+        "price": 5990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900HS9VB/000001_1757552981.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900HS9VB",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900HS9VB"
+    },
+    {
+        "id": 81,
+        "title": "ROG STRIX SCOPE II 96 Wireless NX軸 雪軸 Snow軸 PBT中文 無線鍵盤",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GMVDG/000001_1751446689.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GMVDG",
+        "platform": "pchome",
+        "sku": "DSBC41-A900GMVDG"
+    },
+    {
+        "id": 82,
+        "title": "ROG SCOPE II NX PBT鍵盤 - NX Storm軸",
+        "price": 3990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GTF9R/000001_1757554329.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GTF9R",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900GTF9R"
+    },
+    {
+        "id": 83,
+        "title": "【ASUS 】ROG STRIX SCOPE NX 紅軸 電競鍵盤",
+        "price": 3990,
+        "image_url": "https://cs.ecimg.tw/items/DCBX09A900GL9IQ/000001_1692342939.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBX09-A900GL9IQ",
+        "platform": "pchome",
+        "sku": "DCBX09-A900GL9IQ"
+    },
+    {
+        "id": 84,
+        "title": "【南紡購物中心】 ROG Azoth 客製化無線三模電競鍵盤 白色4/11-6/30登錄即送 ROG NX 機械軸組* 5",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HG35F/000001_1714730419.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HG35F",
+        "platform": "pchome",
+        "sku": "DSBC41-A900HG35F"
+    },
+    {
+        "id": 85,
+        "title": "ROG Falchion Ace 65%機械式鍵盤 茶軸/白色",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900FYVL2/000001_1757552327.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900FYVL2",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900FYVL2"
+    },
+    {
+        "id": 86,
+        "title": "ROG Azoth PBT 月光白 機械式鍵盤 中文/紅軸",
+        "price": 6990,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900GT9P5/000001_1757556884.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900GT9P5",
+        "platform": "pchome",
+        "sku": "DCBE2G-A900GT9P5"
+    },
+    {
+        "id": 87,
+        "title": "ROG STRIX SCOPE NX 電競鍵盤 青 紅軸/NX機械軸/隱形鍵/快速切換開關",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900BTE8W/000001_1747732795.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900BTE8W",
+        "platform": "pchome",
+        "sku": "DSBC41-A900BTE8W"
+    },
+    {
+        "id": 88,
+        "title": "ROG STRIX SCOPE NX 電競鍵盤 NX機械軸/隱形鍵/快速切換開關",
+        "price": 2990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900ESTVA/000001_1747732746.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900ESTVA",
+        "platform": "pchome",
+        "sku": "DSBC41-A900ESTVA"
+    },
+    {
+        "id": 89,
+        "title": "ROG STRIX SCOPE II 96 Wireless NX Storm軸 風暴軸 PBT 三模無線鍵盤",
+        "price": 5490,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GSVXV/000001_1750125108.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GSVXV",
+        "platform": "pchome",
+        "sku": "DSBC41-A900GSVXV"
+    },
+    {
+        "id": 90,
+        "title": "ROG Azoth X 無線電競 風暴軸鍵盤｜白色",
+        "price": 8990,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900J5HLI/000001_1757556948.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900J5HLI",
+        "platform": "pchome",
+        "sku": "DCAHH2-A900J5HLI"
     },
     {
         "id": 91,
-        "title": "Strix Scope II 機械電競鍵盤 [NX SM軸/Snow軸/PBT中文]",
-        "price": 3990,
-        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900I8WA3/000001_1753065127.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900I8WA3",
+        "title": "ROG Falcata 分離式磁軸電競鍵盤",
+        "price": 10490,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900J5KOO/000001_1757556906.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900J5KOO",
         "platform": "pchome",
-        "sku": "DCAHH2-A900I8WA3"
+        "sku": "DCAHH2-A900J5KOO"
     },
     {
         "id": 92,
-        "title": "ROG Azoth X 無線電競鍵盤 三模連線 OLED顯示器 三向控制旋鈕 無線鍵盤 電競鍵盤",
-        "price": 8990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900IOIU7/000001_1756117534.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900IOIU7",
+        "title": "STRIX SCOPE II RX軸 電競鍵盤 青軸 紅軸 RX光學鍵軸 有線電競鍵盤",
+        "price": 4190,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900GM4YK/000001_1747648465.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900GM4YK",
         "platform": "pchome",
-        "sku": "DSBC41-A900IOIU7"
+        "sku": "DSBC41-A900GM4YK"
     },
     {
         "id": 93,
-        "title": "ROG Strix Scope II 96 機械鍵盤 黑色 白色 三模連線 RX光軸 紅軸 青軸 雙色PBT鍵帽",
-        "price": 5990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HRGX6/000001_1747628510.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HRGX6",
+        "title": "Azoth Extreme 無線機械式鍵盤 三模連線 OLED觸控顯示器 熱插拔 支援Mac",
+        "price": 16490,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HP0UC/000001_1755626751.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HP0UC",
         "platform": "pchome",
-        "sku": "DSBC41-A900HRGX6"
+        "sku": "DSBC41-A900HP0UC"
     },
     {
         "id": 94,
-        "title": "Strix Scope II X 電競鍵盤 支援熱插拔 多功能按鈕 PBT二色鍵帽 有線鍵盤",
-        "price": 3990,
-        "image_url": "https://cs.ecimg.tw/items/DSBC41A900J2M1B/000001_1753682157.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900J2M1B",
+        "title": "TUF Gaming K3 GEN II 光學機械式電競鍵盤",
+        "price": 2490,
+        "image_url": "https://cs.ecimg.tw/items/DCAHH2A900I9IOV/000001_1736933138.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCAHH2-A900I9IOV",
         "platform": "pchome",
-        "sku": "DSBC41-A900J2M1B"
+        "sku": "DCAHH2-A900I9IOV"
     },
     {
         "id": 95,
-        "title": "ROG Falchion Ace HFX 雙TypeC 磁力軸電競鍵盤",
-        "price": 6490,
-        "image_url": "https://cs.ecimg.tw/items/DSBE1WA900HWB8U/000001_1728963001.png",
-        "url": "https://24h.pchome.com.tw/prod/DSBE1W-A900HWB8U",
+        "title": "TUF GAMING K3 Gen II 機械式電競鍵盤光學紅軸",
+        "price": 2490,
+        "image_url": "https://cs.ecimg.tw/items/DCBE4BA900HP8IV/000001_1757552401.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE4B-A900HP8IV",
         "platform": "pchome",
-        "sku": "DSBE1W-A900HWB8U"
+        "sku": "DCBE4B-A900HP8IV"
     },
     {
         "id": 96,
-        "title": "【ASUS華碩】ROG Azoth EXTREME 鋁合金電競鍵盤",
+        "title": "Azoth Extreme 無線鍵盤 三模連線 OLED觸控顯示器 熱插拔 支援Mac",
         "price": 16490,
-        "image_url": "https://cs.ecimg.tw/items/DSBE1WA900HOS94/000001_1744183776.png",
-        "url": "https://24h.pchome.com.tw/prod/DSBE1W-A900HOS94",
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HP0SB/000001_1755626814.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HP0SB",
         "platform": "pchome",
-        "sku": "DSBE1W-A900HOS94"
+        "sku": "DSBC41-A900HP0SB"
     },
     {
         "id": 97,
-        "title": "【ASUS華碩】ROG Falchion RX Low Profile 薄型電競 矮軸機械鍵盤 青軸/紅軸",
-        "price": 4990,
-        "image_url": "https://cs.ecimg.tw/items/DSBE1WA900H3W9H/000001_1712565583.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBE1W-A900H3W9H",
+        "title": "TUF GAMING K3 Gen II 機械式電競鍵盤光學青軸",
+        "price": 2490,
+        "image_url": "https://cs.ecimg.tw/items/DCBE2GA900HGRK6/000001_1757556251.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DCBE2G-A900HGRK6",
         "platform": "pchome",
-        "sku": "DSBE1W-A900H3W9H"
+        "sku": "DCBE2G-A900HGRK6"
     },
     {
         "id": 98,
-        "title": "ASUS  ROG Azoth 75% NX 無線電競鍵盤 白色",
-        "price": 6990,
-        "image_url": "https://cs.ecimg.tw/items/DSBE1WA900GXJ5U/000001_1700462371.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBE1W-A900GXJ5U",
+        "title": "TUF Gaming K3 Gen II 電競鍵盤 有線鍵盤 紅軸 青軸 光軸鍵盤/機械鍵盤",
+        "price": 2490,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HI8NP/000001_1744793108.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HI8NP",
         "platform": "pchome",
-        "sku": "DSBE1W-A900GXJ5U"
+        "sku": "DSBC41-A900HI8NP"
     },
     {
         "id": 99,
-        "title": "ASUS華碩 ROG ROG Strix Scope II RX 有線光學電競鍵盤(紅軸/青軸)【中文PBT/可拆靠墊】",
-        "price": 4190,
-        "image_url": "https://cs.ecimg.tw/items/DSBE1WA900GM5UV/000001_1693283636.jpg",
-        "url": "https://24h.pchome.com.tw/prod/DSBE1W-A900GM5UV",
+        "title": "Falchion 65% RX矮軸 三模電競鍵盤 光學矮軸/omni接收器/LED指示燈",
+        "price": 4990,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900H3W08/000001_1747627447.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900H3W08",
         "platform": "pchome",
-        "sku": "DSBE1W-A900GM5UV"
+        "sku": "DSBC41-A900H3W08"
     },
     {
         "id": 100,
-        "title": "【ASUS華碩】ROG STRIX SCOPE II 96 WL 無線機械式鍵盤 白色 (雪軸/STORM軸 選)",
-        "price": 5490,
-        "image_url": "https://cs.ecimg.tw/items/DSBE1WA900HDUD6/000001_1719480637.png",
-        "url": "https://24h.pchome.com.tw/prod/DSBE1W-A900HDUD6",
+        "title": "TUF Gaming K3 Gen II 電競鍵盤 有線鍵盤 紅軸 青軸 光軸鍵盤/機械鍵盤",
+        "price": 2490,
+        "image_url": "https://cs.ecimg.tw/items/DSBC41A900HI8N9/000001_1744792108.jpg",
+        "url": "https://24h.pchome.com.tw/prod/DSBC41-A900HI8N9",
         "platform": "pchome",
-        "sku": "DSBE1W-A900HDUD6"
+        "sku": "DSBC41-A900HI8N9"
     }
 ]
