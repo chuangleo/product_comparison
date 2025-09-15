@@ -1,0 +1,22 @@
+# Web 框架
+Flask
+
+# 資料庫連接
+mysql-connector-python
+
+# 網頁爬蟲相關
+selenium
+
+# 其他可能需要的套件
+requests
+beautifulsoup4
+lxml
+
+# 開發和測試工具 (可選)
+pytest
+pytest-flask
+python-dotenv
+
+# 如果需要處理更多資料格式
+pandas
+numpy

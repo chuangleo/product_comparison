@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品比較與標註 - Momo vs PChome</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1><i class="fas fa-shopping-cart"></i> 商品比較與標註系統</h1>
+            <div class="controls">
+                <div class="select-container">
+                    <select id="momoIndexSelect" class="custom-select">
+                        <option value="all">顯示所有 MOMO 商品</option>
+                        {% for i in range(1, min(101, momo_products|length + 1)) %}
+                        <option value="{{ i }}">第 {{ i }} 項商品</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comparison-container">
+        <!-- 統計資訊 -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="momoCount">{{ momo_products|length }}</div>
+                <div class="stat-label">MOMO 商品</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pchomeCount">{{ pchome_products|length }}</div>
+                <div class="stat-label">PChome 商品</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="selectedCount">0</div>
+                <div class="stat-label">已選商品</div>
+            </div>
+        </div>
+
+        <!-- 工具列 -->
+        <div class="toolbar">
+            <button id="exportButton" class="btn btn-primary">
+                <i class="fas fa-download"></i>
+                匯出勾選商品
+            </button>
+            <button id="selectAllButton" class="btn btn-secondary">
+                <i class="fas fa-check-double"></i>
+                全選
+            </button>
+            <button id="unselectAllButton" class="btn btn-secondary">
+                <i class="fas fa-times"></i>
+                取消全選
+            </button>
+            <button id="clearProductsButton" class="btn btn-danger">
+                <i class="fas fa-trash"></i>
+                清空 Products 表格
+            </button>
+            <button id="clearMomoButton" class="btn btn-danger">
+                <i class="fas fa-trash-alt"></i>
+                清空 MOMO 表格
+            </button>
+            <button id="clearPchomeButton" class="btn btn-danger">
+                <i class="fas fa-trash-alt"></i>
+                清空 PCHome 表格
+            </button>
+        </div>
+
+        <!-- 載入動畫 -->
+        <div class="loading" id="loadingSpinner">
+            <div class="spinner"></div>
+            <p>處理中，請稍候...</p>
+        </div>
+
+        <!-- 商品比較表格 -->
+        <table id="comparisonTable">
+            <thead>
+                <tr>
+                    <th><i class="fas fa-store"></i> Momo 商品</th>
+                    <th><i class="fas fa-shopping-bag"></i> PChome 商品</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 資料傳遞 -->
+    <script id="momo-data" type="application/json">{{ momo_products | tojson }}</script>
+    <script id="pchome-data" type="application/json">{{ pchome_products | tojson }}</script>
+    <script id="max-length-data" type="application/json">{{ max_length }}</script>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
