@@ -251,40 +251,6 @@ function toggleCardSelection(checkbox) {
   }
 }
 
-// 全選功能
-function selectAll() {
-  const checkboxes = document.getElementsByName("selected_products");
-  Array.from(checkboxes).forEach((checkbox) => {
-    checkbox.checked = true;
-    // 更新對應的卡片視覺狀態
-    const cardId =
-      checkbox.getAttribute("data-platform") + "-card-" + checkbox.value;
-    const card = document.getElementById(cardId);
-    if (card) {
-      card.classList.add("selected");
-    }
-  });
-  updateSelectedCount();
-  showMessage("已全選所有商品");
-}
-
-// 取消全選功能
-function unselectAll() {
-  const checkboxes = document.getElementsByName("selected_products");
-  Array.from(checkboxes).forEach((checkbox) => {
-    checkbox.checked = false;
-    // 更新對應的卡片視覺狀態
-    const cardId =
-      checkbox.getAttribute("data-platform") + "-card-" + checkbox.value;
-    const card = document.getElementById(cardId);
-    if (card) {
-      card.classList.remove("selected");
-    }
-  });
-  updateSelectedCount();
-  showMessage("已取消選取所有商品");
-}
-
 function handleExport() {
   console.log("Export button clicked");
   showLoading();
@@ -559,6 +525,31 @@ function handleClearPchome() {
     });
 }
 
+// 自動勾選第一個商品
+function autoSelectFirstProduct() {
+  // 延遲執行，確保 DOM 更新完成
+  setTimeout(() => {
+    const checkboxes = document.getElementsByName("selected_products");
+    if (checkboxes && checkboxes.length > 0) {
+      const firstCheckbox = checkboxes[0];
+      if (firstCheckbox && !firstCheckbox.checked) {
+        // 自動勾選第一個商品
+        firstCheckbox.checked = true;
+        
+        // 更新對應的卡片視覺狀態
+        const cardId = firstCheckbox.getAttribute("data-platform") + "-card-" + firstCheckbox.value;
+        const card = document.getElementById(cardId);
+        if (card) {
+          card.classList.add("selected");
+        }
+        
+        // 更新統計數字
+        updateSelectedCount();
+      }
+    }
+  }, 100);
+}
+
 // 確保 DOM 載入後執行
 window.onload = function () {
   // 初始化資料
@@ -573,13 +564,13 @@ window.onload = function () {
     momoIndexSelect.addEventListener("change", function () {
       const selectedIndex = this.value;
       renderTable(selectedIndex);
+      // 自動勾選第一個商品
+      autoSelectFirstProduct();
     });
   }
 
   // 綁定按鈕事件
   const exportButton = document.getElementById("exportButton");
-  const selectAllButton = document.getElementById("selectAllButton");
-  const unselectAllButton = document.getElementById("unselectAllButton");
   const clearProductsButton = document.getElementById("clearProductsButton");
   const clearMomoButton = document.getElementById("clearMomoButton");
   const clearPchomeButton = document.getElementById("clearPchomeButton");
@@ -602,8 +593,6 @@ window.onload = function () {
   }
 
   exportButton.addEventListener("click", handleExport);
-  selectAllButton && selectAllButton.addEventListener("click", selectAll);
-  unselectAllButton && unselectAllButton.addEventListener("click", unselectAll);
   clearProductsButton.addEventListener("click", handleClearProducts);
   clearMomoButton.addEventListener("click", handleClearMomo);
   clearPchomeButton.addEventListener("click", handleClearPchome);
