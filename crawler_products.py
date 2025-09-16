@@ -233,12 +233,27 @@ def fetch_products_for_momo(keyword, max_products=50):
                             except NoSuchElementException:
                                 url = ""
                     
-                    # 提取 i_code 作為 sku
+                    # 提取 i_code 作為 sku，如果找不到則使用網址最後一段
                     sku = ""
                     if url:
+                        # 首先嘗試提取 i_code
                         match = re.search(r'i_code=(\d+)', url)
                         if match:
                             sku = match.group(1)
+                        else:
+                            # 如果找不到 i_code，則使用網址的最後一段
+                            # 例如：https://www.momoshop.com.tw/goods/GoodsDetail.jsp?i_code=123456
+                            # 或：https://www.momoshop.com.tw/product/ABC123
+                            url_parts = url.rstrip('/').split('/')
+                            if url_parts:
+                                last_part = url_parts[-1]
+                                # 如果最後一段包含參數，只取檔名部分
+                                if '?' in last_part:
+                                    last_part = last_part.split('?')[0]
+                                # 如果最後一段有副檔名，去掉副檔名
+                                if '.' in last_part:
+                                    last_part = last_part.split('.')[0]
+                                sku = last_part
                     
                     # 提取商品圖片
                     image_url = ""
