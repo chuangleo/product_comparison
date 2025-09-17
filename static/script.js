@@ -201,6 +201,19 @@ function renderTable(momoIndex = "all") {
                   </div></td>`;
     }
 
+    // 新增 Uncertainty Level 輸入欄位
+    rowHtml += `<td class="uncertainty-cell">`;
+    if (pchomeProduct) {
+      rowHtml += `<input type="number" class="uncertainty-input" 
+                         min="1" max="100"
+                         id="uncertainty_${pchomeProduct.id}"
+                         placeholder="1-100"
+                         onchange="validateUncertainty(this)">`;
+    } else {
+      rowHtml += `-`;
+    }
+    rowHtml += `</td>`;
+
     rowHtml += "</tr>";
     tableBody.innerHTML += rowHtml;
   }
@@ -332,6 +345,10 @@ function handleExport() {
           pchomeProduct["price"]?.toLocaleString() || "未知價格"
         }\n`;
         txtContent += `\n`;
+        // 獲取 uncertainty level 值
+        const uncertaintyInput = document.getElementById(`uncertainty_${item.id}`);
+        const uncertaintyLevel = uncertaintyInput ? parseInt(uncertaintyInput.value) || null : null;
+        
         selectedProducts.push({
           sku: pchomeProduct["sku"] || "無SKU",
           title: pchomeProduct["title"] || "未知商品名稱",
@@ -340,6 +357,7 @@ function handleExport() {
           platform: pchomeProduct["platform"] || "pchome",
           connect: momoSku,
           price: pchomeProduct["price"] || 0,
+          uncertainty_level: uncertaintyLevel
         });
       }
     }
