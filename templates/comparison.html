@@ -75,6 +75,7 @@
                 <tr>
                     <th><i class="fas fa-store"></i> Momo 商品</th>
                     <th><i class="fas fa-shopping-bag"></i> PChome 商品</th>
+                    <th><i class="fas fa-question-circle"></i> 可能問題(#)</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -87,6 +88,7 @@
     <script id="pchome-data" type="application/json">{{ pchome_products | tojson }}</script>
     <script id="max-length-data" type="application/json">{{ max_length }}</script>
 
+    <script src="{{ url_for('static', filename='validate.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 
