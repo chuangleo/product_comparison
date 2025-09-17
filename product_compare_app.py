@@ -216,7 +216,8 @@ def save_to_mysql():
                 url TEXT,
                 platform VARCHAR(50),
                 connect VARCHAR(100),
-                price DECIMAL(10, 2)
+                price DECIMAL(10, 2),
+                uncertainty_level TINYINT UNSIGNED NULL CHECK (uncertainty_level BETWEEN 1 AND 100)
             )
             """
             products_cursor.execute(create_products_table_query)
@@ -239,8 +240,8 @@ def save_to_mysql():
             print("表格 'momo_database.momo_products' 已建立或已存在")
 
             insert_products_query = """
-            INSERT INTO products (sku, title, image, url, platform, connect, price)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO products (sku, title, image, url, platform, connect, price, uncertainty_level)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """
             inserted_products_count = 0
             for product in products:
@@ -252,7 +253,8 @@ def save_to_mysql():
                         product['url'],
                         product['platform'],
                         product['connect'],
-                        product['price']
+                        product['price'],
+                        product.get('uncertainty_level', None)
                     ))
                     inserted_products_count += 1
                     print(f"已插入商品到 products_database.products：{product}")
