@@ -357,7 +357,7 @@ function handleExport() {
           platform: pchomeProduct["platform"] || "pchome",
           connect: momoSku,
           price: pchomeProduct["price"] || 0,
-          uncertainty_level: uncertaintyLevel
+          uncertainty_problem: uncertaintyLevel
         });
       }
     }
