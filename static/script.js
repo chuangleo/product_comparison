@@ -347,7 +347,7 @@ function handleExport() {
         txtContent += `\n`;
         // 獲取 uncertainty level 值
         const uncertaintyInput = document.getElementById(`uncertainty_${item.id}`);
-        const uncertaintyLevel = uncertaintyInput ? parseInt(uncertaintyInput.value) || null : null;
+        const uncertaintyLevel = uncertaintyInput ? (parseInt(uncertaintyInput.value) || 0) : 0;
         
         selectedProducts.push({
           sku: pchomeProduct["sku"] || "無SKU",
