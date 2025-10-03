@@ -561,8 +561,13 @@ def fetch_products_for_pchome(keyword, max_products=50):
 if __name__ == "__main__":
     # 測試爬蟲
     keyword = input("輸入關鍵字: ")
+    english_keyword = input("輸入關鍵字的英文名稱: ")
     num = int(input("輸入數量: "))
     products = fetch_products_for_momo(keyword, num)
+    
+    # 為每個商品添加查詢關鍵字
+    for product in products:
+        product['query'] = english_keyword
     
     # 儲存 products 至 JSON 檔案
     with open("momo_products.json", "w", encoding="utf-8") as f:
@@ -582,6 +587,10 @@ if __name__ == "__main__":
         print("沒有找到商品")
 
     products = fetch_products_for_pchome(keyword, num)
+    
+    # 為每個商品添加查詢關鍵字
+    for product in products:
+        product['query'] = english_keyword
     
     # 儲存 products 至 JSON 檔案
     with open("pchome_products.json", "w", encoding="utf-8") as f:
