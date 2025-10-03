@@ -339,11 +339,38 @@ def clear_products():
         )
 
         if products_conn.is_connected():
-            products_cursor = products_conn.cursor()
-            products_cursor.execute("TRUNCATE TABLE products")
-            print("已清空 products_database.products 表格")
-            products_conn.commit()
-            return jsonify({'success': True})
+                products_cursor = products_conn.cursor()
+
+                # 確保表格存在（使用與 save_to_mysql 相同的 schema）
+                create_products_table_query = """
+                CREATE TABLE IF NOT EXISTS products (
+                    sku VARCHAR(100) PRIMARY KEY,
+                    title VARCHAR(255),
+                    image TEXT,
+                    url TEXT,
+                    platform VARCHAR(50),
+                    connect VARCHAR(100),
+                    price DECIMAL(10, 2),
+                    uncertainty_problem TINYINT UNSIGNED NOT NULL DEFAULT 0 CHECK (uncertainty_problem BETWEEN 0 AND 100),
+                    query VARCHAR(100)
+                )
+                """
+                products_cursor.execute(create_products_table_query)
+
+                # 現在嘗試清空表格；若 TRUNCATE 因表不存在失敗 (1146)，則建立表格後重試
+                try:
+                    products_cursor.execute("TRUNCATE TABLE products")
+                except Error as e:
+                    # 如果 table 不存在，建立表再重試
+                    if getattr(e, 'errno', None) == 1146:
+                        products_cursor.execute(create_products_table_query)
+                        products_cursor.execute("TRUNCATE TABLE products")
+                    else:
+                        raise
+
+                print("已清空 products_database.products 表格")
+                products_conn.commit()
+                return jsonify({'success': True})
 
     except Error as e:
         print(f"MySQL 錯誤: {e}")
@@ -386,7 +413,33 @@ def clear_momo_products():
 
         if momo_conn.is_connected():
             momo_cursor = momo_conn.cursor()
-            momo_cursor.execute("TRUNCATE TABLE momo_products")
+
+            # 確保表格存在（使用與 save_to_mysql 相同的 schema）
+            create_momo_table_query = """
+            CREATE TABLE IF NOT EXISTS momo_products (
+                sku VARCHAR(100) PRIMARY KEY,
+                title VARCHAR(255),
+                image TEXT,
+                url TEXT,
+                platform VARCHAR(50),
+                connect VARCHAR(100),
+                price DECIMAL(10, 2),
+                num INT,
+                query VARCHAR(100)
+            )
+            """
+            momo_cursor.execute(create_momo_table_query)
+
+            # 嘗試清空表格；如果因表不存在（1146）失敗，建立表再重試
+            try:
+                momo_cursor.execute("TRUNCATE TABLE momo_products")
+            except Error as e:
+                if getattr(e, 'errno', None) == 1146:
+                    momo_cursor.execute(create_momo_table_query)
+                    momo_cursor.execute("TRUNCATE TABLE momo_products")
+                else:
+                    raise
+
             print("已清空 momo_database.momo_products 表格")
             momo_conn.commit()
             return jsonify({'success': True})
