@@ -307,6 +307,7 @@ function handleExport() {
         txtContent += `image: ${momoProduct["image_url"] || "無圖片"}\n`;
         txtContent += `url: ${momoProduct["url"] || "無連結"}\n`;
         txtContent += `platform: ${momoProduct["platform"] || "momo"}\n`;
+        txtContent += `query: ${momoProduct["query"] || "無關鍵字"}\n`;
         txtContent += `price: NT$${
           momoProduct["price"]?.toLocaleString() || "未知價格"
         }\n`;
@@ -320,6 +321,7 @@ function handleExport() {
           connect: "root",
           price: momoProduct["price"] || 0,
           num: 0, // 初始值，稍後更新
+          query: momoProduct["query"] || ""
         });
       }
     }
@@ -341,6 +343,7 @@ function handleExport() {
         txtContent += `url: ${pchomeProduct["url"] || "無連結"}\n`;
         txtContent += `platform: ${pchomeProduct["platform"] || "pchome"}\n`;
         txtContent += `connect: ${momoSku}\n`;
+        txtContent += `query: ${pchomeProduct["query"] || "無關鍵字"}\n`;
         txtContent += `price: NT$${
           pchomeProduct["price"]?.toLocaleString() || "未知價格"
         }\n`;
@@ -357,7 +360,8 @@ function handleExport() {
           platform: pchomeProduct["platform"] || "pchome",
           connect: momoSku,
           price: pchomeProduct["price"] || 0,
-          uncertainty_problem: uncertaintyLevel
+          uncertainty_problem: uncertaintyLevel,
+          query: pchomeProduct["query"] || ""
         });
       }
     }
