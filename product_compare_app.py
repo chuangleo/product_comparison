@@ -58,7 +58,8 @@ def initialize_pchome_database(pchome_file="pchome_products.json"):
             pchome_cursor = pchome_conn.cursor()
             create_pchome_table_query = """
             CREATE TABLE IF NOT EXISTS pchome_products (
-                sku VARCHAR(100) PRIMARY KEY,
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                sku VARCHAR(100) UNIQUE,
                 title VARCHAR(255),
                 image TEXT,
                 url TEXT,
@@ -208,9 +209,15 @@ def save_to_mysql():
             products_cursor = products_conn.cursor()
             momo_cursor = momo_conn.cursor()
 
+            # 先檢查收到的資料
+            print(f"準備處理的商品數量：{len(products)}")
+            print("收到的商品資料：", json.dumps(products, ensure_ascii=False, indent=2))
+
+            # 確認表格存在（移除 UNIQUE 限制以允許重複 SKU）
             create_products_table_query = """
             CREATE TABLE IF NOT EXISTS products (
-                sku VARCHAR(100) PRIMARY KEY,
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                sku VARCHAR(100),
                 title VARCHAR(255),
                 image TEXT,
                 url TEXT,
@@ -222,11 +229,12 @@ def save_to_mysql():
             )
             """
             products_cursor.execute(create_products_table_query)
-            print("表格 'products_database.products' 已建立或已存在")
+            print("表格 'products_database.products' 已建立或已存在（允許重複 SKU）")
 
             create_momo_table_query = """
             CREATE TABLE IF NOT EXISTS momo_products (
-                sku VARCHAR(100) PRIMARY KEY,
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                sku VARCHAR(100),
                 title VARCHAR(255),
                 image TEXT,
                 url TEXT,
@@ -238,15 +246,18 @@ def save_to_mysql():
             )
             """
             momo_cursor.execute(create_momo_table_query)
-            print("表格 'momo_database.momo_products' 已建立或已存在")
+            print("表格 'momo_database.momo_products' 已建立或已存在（允許重複 SKU）")
 
+            # 簡單的插入語句，允許重複
             insert_products_query = """
             INSERT INTO products (sku, title, image, url, platform, connect, price, uncertainty_problem, query)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             inserted_products_count = 0
+            
             for product in products:
                 try:
+                    # 直接插入新記錄
                     products_cursor.execute(insert_products_query, (
                         product['sku'],
                         product['title'],
@@ -255,16 +266,23 @@ def save_to_mysql():
                         product['platform'],
                         product['connect'],
                         product['price'],
-                        product.get('uncertainty_problem', 0),  # 如果沒有提供就使用 0
+                        product.get('uncertainty_problem', 0),
                         product.get('query', '')
                     ))
+                    
                     inserted_products_count += 1
-                    print(f"已插入商品到 products_database.products：{product}")
+                    print(f"已新增商品：{json.dumps(product, ensure_ascii=False)}")
+                    
                 except Error as e:
-                    print(f"插入 products 商品時發生錯誤: {e}, 商品: {product.get('sku', '無SKU')}")
+                    print(f"處理商品時發生錯誤: {e}")
+                    print(f"問題商品資料: {json.dumps(product, ensure_ascii=False)}")
+                    continue  # 繼續處理下一個商品
+                    
+            print(f"總共處理了 {len(products)} 筆商品")
+            print(f"成功新增了 {inserted_products_count} 筆")
 
             insert_momo_query = """
-            INSERT IGNORE INTO momo_products (sku, title, image, url, platform, connect, price, num, query)
+            INSERT INTO momo_products (sku, title, image, url, platform, connect, price, num, query)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             inserted_momo_count = 0
@@ -281,11 +299,8 @@ def save_to_mysql():
                         product['num'],
                         product.get('query', '')
                     ))
-                    if momo_cursor.rowcount > 0:
-                        inserted_momo_count += 1
-                        print(f"已插入商品到 momo_database.momo_products：{product}")
-                    else:
-                        print(f"商品 SKU {product['sku']} 已存在，跳過插入")
+                    inserted_momo_count += 1
+                    print(f"已新增 MOMO 商品：{json.dumps(product, ensure_ascii=False)}")
                 except Error as e:
                     print(f"插入 MOMO 商品時發生錯誤: {e}, 商品: {product.get('sku', '無SKU')}")
 
@@ -339,38 +354,27 @@ def clear_products():
         )
 
         if products_conn.is_connected():
-                products_cursor = products_conn.cursor()
-
-                # 確保表格存在（使用與 save_to_mysql 相同的 schema）
-                create_products_table_query = """
-                CREATE TABLE IF NOT EXISTS products (
-                    sku VARCHAR(100) PRIMARY KEY,
-                    title VARCHAR(255),
-                    image TEXT,
-                    url TEXT,
-                    platform VARCHAR(50),
-                    connect VARCHAR(100),
-                    price DECIMAL(10, 2),
-                    uncertainty_problem TINYINT UNSIGNED NOT NULL DEFAULT 0 CHECK (uncertainty_problem BETWEEN 0 AND 100),
-                    query VARCHAR(100)
-                )
-                """
-                products_cursor.execute(create_products_table_query)
-
-                # 現在嘗試清空表格；若 TRUNCATE 因表不存在失敗 (1146)，則建立表格後重試
-                try:
-                    products_cursor.execute("TRUNCATE TABLE products")
-                except Error as e:
-                    # 如果 table 不存在，建立表再重試
-                    if getattr(e, 'errno', None) == 1146:
-                        products_cursor.execute(create_products_table_query)
-                        products_cursor.execute("TRUNCATE TABLE products")
-                    else:
-                        raise
-
-                print("已清空 products_database.products 表格")
-                products_conn.commit()
-                return jsonify({'success': True})
+            products_cursor = products_conn.cursor()
+            # 確保表格存在（若不存在就建立），以避免 TRUNCATE 時出現 1146 錯誤
+            create_products_table_query = """
+            CREATE TABLE IF NOT EXISTS products (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                sku VARCHAR(100),
+                title VARCHAR(255),
+                image TEXT,
+                url TEXT,
+                platform VARCHAR(50),
+                connect VARCHAR(100),
+                price DECIMAL(10, 2),
+                uncertainty_problem TINYINT UNSIGNED NOT NULL DEFAULT 0 CHECK (uncertainty_problem BETWEEN 0 AND 100),
+                query VARCHAR(100)
+            )
+            """
+            products_cursor.execute(create_products_table_query)
+            products_cursor.execute("TRUNCATE TABLE products")
+            print("已清空 products_database.products 表格（若原本不存在則已建立再清空）")
+            products_conn.commit()
+            return jsonify({'success': True})
 
     except Error as e:
         print(f"MySQL 錯誤: {e}")
@@ -413,11 +417,11 @@ def clear_momo_products():
 
         if momo_conn.is_connected():
             momo_cursor = momo_conn.cursor()
-
-            # 確保表格存在（使用與 save_to_mysql 相同的 schema）
+            # 確保表格存在（若不存在就建立），以避免 TRUNCATE 時出現 1146 錯誤
             create_momo_table_query = """
             CREATE TABLE IF NOT EXISTS momo_products (
-                sku VARCHAR(100) PRIMARY KEY,
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                sku VARCHAR(100),
                 title VARCHAR(255),
                 image TEXT,
                 url TEXT,
@@ -429,18 +433,8 @@ def clear_momo_products():
             )
             """
             momo_cursor.execute(create_momo_table_query)
-
-            # 嘗試清空表格；如果因表不存在（1146）失敗，建立表再重試
-            try:
-                momo_cursor.execute("TRUNCATE TABLE momo_products")
-            except Error as e:
-                if getattr(e, 'errno', None) == 1146:
-                    momo_cursor.execute(create_momo_table_query)
-                    momo_cursor.execute("TRUNCATE TABLE momo_products")
-                else:
-                    raise
-
-            print("已清空 momo_database.momo_products 表格")
+            momo_cursor.execute("TRUNCATE TABLE momo_products")
+            print("已清空 momo_database.momo_products 表格（若原本不存在則已建立再清空）")
             momo_conn.commit()
             return jsonify({'success': True})
 
@@ -485,8 +479,22 @@ def clear_pchome_products():
 
         if pchome_conn.is_connected():
             pchome_cursor = pchome_conn.cursor()
+            # 確保表格存在（若不存在就建立），以避免 TRUNCATE 時出現 1146 錯誤
+            create_pchome_table_query = """
+            CREATE TABLE IF NOT EXISTS pchome_products (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                sku VARCHAR(100) UNIQUE,
+                title VARCHAR(255),
+                image TEXT,
+                url TEXT,
+                platform VARCHAR(50),
+                connect VARCHAR(100),
+                price DECIMAL(10, 2)
+            )
+            """
+            pchome_cursor.execute(create_pchome_table_query)
             pchome_cursor.execute("TRUNCATE TABLE pchome_products")
-            print("已清空 pchome_database.pchome_products 表格")
+            print("已清空 pchome_database.pchome_products 表格（若原本不存在則已建立再清空）")
             pchome_conn.commit()
             return jsonify({'success': True})
 
