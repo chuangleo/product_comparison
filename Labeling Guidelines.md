@@ -146,7 +146,7 @@
 #### 5. 若商品詞條包含多個產品或沒有標示型號則==略過此商品不用標==
 例如:
 ![image](https://github.com/chuangleo/product_comparison/blob/main/image/Q4.png)
-
+![image](https://github.com/chuangleo/product_comparison/blob/main/image/Q4-1.png)
 
 
 #### 6. 若左邊商品有特別註記顏色而右邊有不同顏色的商品==視為同商品但要註記#6==
