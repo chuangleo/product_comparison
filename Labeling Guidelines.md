@@ -137,21 +137,21 @@
 ![546758421_1839638936587468_8364684350452061937_n](https://github.com/chuangleo/product_comparison/blob/main/image/Q1.png)
 #### 2. 若有遇到福利品、二手商品等視為==視為同商品但要註記#2==
 例如:
-![image](https://hackmd.io/_uploads/rJkX-iIogl.png)
+![image](https://github.com/chuangleo/product_comparison/blob/main/image/Q2.png)
 #### 3. 假設MK270R 鍵鼠組和MK270R，雖然說確實包含 K270 鍵盤，但僅從這兩個詞條本身，無法確定它們有相關，這種情況都當作==不相同==
 
 #### 4. 若有遇到相同商品但詞條上有寫不同配件的情況視為==不同商品==
 例如:
-![image](https://hackmd.io/_uploads/Bkui7oUjgg.png)
+![image](https://github.com/chuangleo/product_comparison/blob/main/image/Q3.png)
 #### 5. 若商品詞條包含多個產品或沒有標示型號則==略過此商品不用標==
 例如:
-![image](https://hackmd.io/_uploads/Bkc__o8ill.png)
-![image](https://hackmd.io/_uploads/S1DCOo8igl.png)
+![image](https://github.com/chuangleo/product_comparison/blob/main/image/Q4.png)
+
 
 
 #### 6. 若左邊商品有特別註記顏色而右邊有不同顏色的商品==視為同商品但要註記#6==
 例如:
-![螢幕擷取畫面 2025-09-26 145149](https://hackmd.io/_uploads/Bk6lthXnlx.png)
+![螢幕擷取畫面 2025-09-26 145149](https://github.com/chuangleo/product_comparison/blob/main/image/Q5.png)
 
 #### 7. 如果是出現有關ml數的就是必須相同ml才算一樣，否則都算==不相同==
 
@@ -159,7 +159,7 @@
 
 #### 8. 如果有出現商品型號一樣但可能出現，環保包裝，無蓋包裝等都算是==不一樣==的
 例如:
-![image](https://hackmd.io/_uploads/BJhhV8R2ex.png)
+![image](https://github.com/chuangleo/product_comparison/blob/main/image/Q6.png)
 
 
 #### 特別標註: 若上面情況都沒涵蓋到但確定是同項商品，則==註記#100==
