@@ -134,7 +134,7 @@
 
 #### 1. 遇到超值組、單機組這樣類似的商品組合，就將它們視為==不同商品==
 例如:
-![546758421_1839638936587468_8364684350452061937_n](https://hackmd.io/_uploads/Syyk1o8ixl.jpg)
+![546758421_1839638936587468_8364684350452061937_n](https://github.com/chuangleo/product_comparison/blob/main/image/Q1.png)
 #### 2. 若有遇到福利品、二手商品等視為==視為同商品但要註記#2==
 例如:
 ![image](https://hackmd.io/_uploads/rJkX-iIogl.png)
