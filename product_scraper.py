@@ -38,6 +38,7 @@ def fetch_products_for_momo(keyword, max_products=50):
     product_id = 1  # 順序編號
     driver = None
     page = 1  # 當前頁數
+    seen_skus = set()  # 追蹤已經收集的 SKU，避免重複
     
     try:
         # 設定 Chrome 選項
@@ -301,6 +302,11 @@ def fetch_products_for_momo(keyword, max_products=50):
                     
                     # 確保所有必要欄位都有值才加入商品
                     if title and price > 0 and url:
+                        # 檢查 SKU 是否重複
+                        if sku and sku in seen_skus:
+                            #print(f"跳過重複 SKU: {sku}")
+                            continue
+                        
                         product = {
                             "id": product_id,
                             "title": title,
@@ -311,6 +317,8 @@ def fetch_products_for_momo(keyword, max_products=50):
                             "sku": sku
                         }
                         products.append(product)
+                        if sku:
+                            seen_skus.add(sku)
                         product_id += 1
                         page_products_count += 1
                         #print(f"成功解析商品 {len(products)}: {title[:50]}... (NT$ {price:,})")
@@ -341,28 +349,9 @@ def fetch_products_for_momo(keyword, max_products=50):
             else:
                 break
         
-        print(f"成功從 momo 獲取 {len(products)} 個商品")
+        print(f"成功從 momo 獲取 {len(products)} 個唯一商品（已自動過濾重複 SKU）")
         
-        # 過濾掉重複的 SKU，保留第一個出現的商品
-        seen_skus = set()
-        unique_products = []
-        duplicate_count = 0
-        
-        for product in products:
-            sku = product.get('sku', '')
-            if sku and sku in seen_skus:
-                duplicate_count += 1
-                print(f"過濾重複 SKU: {sku} - {product['title'][:50]}...")
-                continue
-            if sku:
-                seen_skus.add(sku)
-            unique_products.append(product)
-        
-        if duplicate_count > 0:
-            print(f"已過濾掉 {duplicate_count} 個重複 SKU 的商品")
-            print(f"剩餘 {len(unique_products)} 個唯一商品")
-        
-        return unique_products
+        return products
         
     except Exception as e:
         print(f"momo Selenium 爬蟲發生錯誤: {e}")
@@ -392,6 +381,7 @@ def fetch_products_for_pchome(keyword, max_products=50):
     product_id = 1
     driver = None
     page = 1
+    seen_skus = set()  # 追蹤已經收集的 SKU，避免重複
 
     try:
         chrome_options = Options()
@@ -455,6 +445,10 @@ def fetch_products_for_pchome(keyword, max_products=50):
                     image_url = ""
 
                 if base_title and price > 0 and url:
+                    # 檢查 SKU 是否重複
+                    if sku and sku in seen_skus:
+                        continue
+                    
                     all_basic_products.append({
                         "base_title": base_title,
                         "price": price,
@@ -463,6 +457,9 @@ def fetch_products_for_pchome(keyword, max_products=50):
                         "sku": sku,
                         "image_url": image_url
                     })
+                    
+                    if sku:
+                        seen_skus.add(sku)
 
             if len(items) < 20:
                 print("可能已到達最後一頁，停止抓取基本信息")
@@ -562,28 +559,9 @@ def fetch_products_for_pchome(keyword, max_products=50):
             # 批次間稍作休息
             time.sleep(1)
 
-        print(f"成功從 PChome 獲取 {len(products)} 個商品")
+        print(f"成功從 PChome 獲取 {len(products)} 個唯一商品（已自動過濾重複 SKU）")
         
-        # 過濾掉重複的 SKU，保留第一個出現的商品
-        seen_skus = set()
-        unique_products = []
-        duplicate_count = 0
-        
-        for product in products:
-            sku = product.get('sku', '')
-            if sku and sku in seen_skus:
-                duplicate_count += 1
-                print(f"過濾重複 SKU: {sku} - {product['title'][:50]}...")
-                continue
-            if sku:
-                seen_skus.add(sku)
-            unique_products.append(product)
-        
-        if duplicate_count > 0:
-            print(f"已過濾掉 {duplicate_count} 個重複 SKU 的商品")
-            print(f"剩餘 {len(unique_products)} 個唯一商品")
-        
-        return unique_products
+        return products
 
     except Exception as e:
         print(f"PChome Selenium 爬蟲發生錯誤: {e}")
