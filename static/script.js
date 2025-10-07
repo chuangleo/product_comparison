@@ -321,7 +321,7 @@ function handleExport() {
           connect: "root",
           price: momoProduct["price"] || 0,
           num: 0, // 初始值，稍後更新
-          query: momoProduct["query"] || ""
+          query: momoProduct["query"] || "",
         });
       }
     }
@@ -349,9 +349,13 @@ function handleExport() {
         }\n`;
         txtContent += `\n`;
         // 獲取 uncertainty level 值
-        const uncertaintyInput = document.getElementById(`uncertainty_${item.id}`);
-        const uncertaintyLevel = uncertaintyInput ? (parseInt(uncertaintyInput.value) || 0) : 0;
-        
+        const uncertaintyInput = document.getElementById(
+          `uncertainty_${item.id}`
+        );
+        const uncertaintyLevel = uncertaintyInput
+          ? parseInt(uncertaintyInput.value) || 0
+          : 0;
+
         selectedProducts.push({
           sku: pchomeProduct["sku"] || "無SKU",
           title: pchomeProduct["title"] || "未知商品名稱",
@@ -361,7 +365,7 @@ function handleExport() {
           connect: momoSku,
           price: pchomeProduct["price"] || 0,
           uncertainty_problem: uncertaintyLevel,
-          query: pchomeProduct["query"] || ""
+          query: pchomeProduct["query"] || "",
         });
       }
     }
@@ -557,14 +561,17 @@ function autoSelectFirstProduct() {
       if (firstCheckbox && !firstCheckbox.checked) {
         // 自動勾選第一個商品
         firstCheckbox.checked = true;
-        
+
         // 更新對應的卡片視覺狀態
-        const cardId = firstCheckbox.getAttribute("data-platform") + "-card-" + firstCheckbox.value;
+        const cardId =
+          firstCheckbox.getAttribute("data-platform") +
+          "-card-" +
+          firstCheckbox.value;
         const card = document.getElementById(cardId);
         if (card) {
           card.classList.add("selected");
         }
-        
+
         // 更新統計數字
         updateSelectedCount();
       }
@@ -619,6 +626,167 @@ window.onload = function () {
   clearMomoButton.addEventListener("click", handleClearMomo);
   clearPchomeButton.addEventListener("click", handleClearPchome);
 
+  // 搜索功能初始化
+  initializeSearch();
+
   // 初始隱藏載入動畫
   hideLoading();
 };
+
+// 搜索功能相關變數
+let filteredPchomeProducts = [];
+let currentSearchTerm = "";
+
+// 初始化搜索功能
+function initializeSearch() {
+  const searchInput = document.getElementById("searchInput");
+  const clearSearchButton = document.getElementById("clearSearchButton");
+
+  if (!searchInput || !clearSearchButton) {
+    console.error("搜索元素未找到");
+    return;
+  }
+
+  // 初始化時顯示所有商品
+  filteredPchomeProducts = [...pchomeProducts];
+  updateSearchStats();
+
+  // 搜索輸入事件
+  searchInput.addEventListener("input", function () {
+    currentSearchTerm = this.value.trim();
+    performSearch();
+    toggleClearButton();
+  });
+
+  // 清除搜索按鈕事件
+  clearSearchButton.addEventListener("click", function () {
+    searchInput.value = "";
+    currentSearchTerm = "";
+    clearSearch();
+    toggleClearButton();
+    searchInput.focus();
+  });
+
+  // Enter 鍵搜索
+  searchInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      performSearch();
+    }
+  });
+}
+
+// 執行搜索
+function performSearch() {
+  if (!currentSearchTerm) {
+    clearSearch();
+    return;
+  }
+
+  const searchTermLower = currentSearchTerm.toLowerCase();
+  const tableBody = document.getElementById("tableBody");
+  const rows = tableBody.getElementsByTagName("tr");
+
+  let visibleCount = 0;
+
+  // 遍歷所有表格行
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const pchomeCells = row.getElementsByTagName("td");
+
+    if (pchomeCells.length >= 2) {
+      const pchomeCell = pchomeCells[1]; // PChome 商品在第二欄
+      const titleElement = pchomeCell.querySelector(".product-title");
+
+      if (titleElement) {
+        const title = titleElement.textContent || titleElement.innerText;
+        const titleMatch = title.toLowerCase().includes(searchTermLower);
+
+        // 檢查是否有 SKU 匹配（如果有的話）
+        const skuMatch = false; // 暫時先不檢查 SKU，因為它沒有直接顯示在頁面上
+
+        if (titleMatch || skuMatch) {
+          row.style.display = "";
+          visibleCount++;
+          // 高亮搜索關鍵字
+          titleElement.innerHTML = highlightSearchTerm(
+            title,
+            currentSearchTerm
+          );
+        } else {
+          row.style.display = "none";
+        }
+      } else {
+        // 如果沒有商品標題（空行），也隱藏
+        row.style.display = "none";
+      }
+    }
+  }
+
+  updateSearchStats(visibleCount);
+}
+
+// 清除搜索
+function clearSearch() {
+  filteredPchomeProducts = [...pchomeProducts];
+  currentSearchTerm = "";
+
+  const tableBody = document.getElementById("tableBody");
+  const rows = tableBody.getElementsByTagName("tr");
+
+  // 顯示所有行並清除高亮
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    row.style.display = "";
+
+    // 清除高亮效果
+    const titleElements = row.querySelectorAll(".product-title");
+    titleElements.forEach((titleElement) => {
+      const title = titleElement.textContent || titleElement.innerText;
+      // 移除 mark 標籤，只保留純文字
+      titleElement.innerHTML = title.replace(
+        /<mark[^>]*>(.*?)<\/mark>/gi,
+        "$1"
+      );
+    });
+  }
+
+  updateSearchStats(rows.length);
+}
+
+// 更新搜索統計資訊
+function updateSearchStats(visibleCount = null) {
+  const searchResults = document.getElementById("searchResults");
+  if (!searchResults) return;
+
+  if (currentSearchTerm && visibleCount !== null) {
+    const totalCount = pchomeProducts.length;
+    searchResults.innerHTML = `搜索 "<span class="highlight">${currentSearchTerm}</span>" 找到 <span class="highlight">${visibleCount}</span> / ${totalCount} 個商品`;
+  } else {
+    searchResults.innerHTML = "顯示全部商品";
+  }
+}
+
+// 切換清除按鈕顯示狀態
+function toggleClearButton() {
+  const clearButton = document.getElementById("clearSearchButton");
+  const searchInput = document.getElementById("searchInput");
+
+  if (!clearButton || !searchInput) return;
+
+  if (searchInput.value.trim()) {
+    clearButton.classList.add("visible");
+  } else {
+    clearButton.classList.remove("visible");
+  }
+}
+
+// 高亮搜索關鍵字
+function highlightSearchTerm(text, searchTerm) {
+  if (!searchTerm || !text) return text;
+
+  const regex = new RegExp(`(${searchTerm})`, "gi");
+  return text.replace(
+    regex,
+    '<mark style="background: #fff3cd; padding: 1px 2px; border-radius: 2px;">$1</mark>'
+  );
+}
