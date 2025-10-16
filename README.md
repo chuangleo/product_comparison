@@ -50,7 +50,7 @@
    ```
    
 - 開啟網頁(http://127.0.0.1:5000/)，並先按下三個清空表格按鈕。
-![image](https://hackmd.io/_uploads/SyUVwx6pgl.png)
+![image](https://github.com/chuangleo/product_comparison/blob/main/image/Readme2.png)
 - 進行標註(以左邊商品做為root去尋找於之相符的右邊商品leaf)，找完後按下匯出商品
 - 在mysql_workbench中查看是否正確存取
   - 查看root data: 在mysql_workbench中輸入下面指令並框起來按下閃電符號
@@ -58,25 +58,25 @@
     USE momo_database;
     SELECT * FROM momo_products;
      ```
-    ![image](https://hackmd.io/_uploads/S17Mqea6xe.png)
+    ![image](https://github.com/chuangleo/product_comparison/blob/main/image/Readme3.png)
 
    - 查看leaf data: 在mysql_workbench中輸入下面指令並框起來按下閃電符號
      ```
       USE products_database;
       SELECT * FROM products;
      ```
-     ![image](https://hackmd.io/_uploads/H19oqx6axx.png)
+     ![image](https://github.com/chuangleo/product_comparison/blob/main/image/Readme4.png)
 
    - 查看pchome data: 在mysql_workbench中輸入下面指令並框起來按下閃電符號
      ```
       USE pchome_database;
       SELECT * FROM pchome_products;
      ```
-     ![image](https://hackmd.io/_uploads/HkhjjeTpgl.png)
+     ![image](https://github.com/chuangleo/product_comparison/blob/main/image/Readme5.png)
 
 - 在完成所有標註後匯出資料
   - 在mysql_workbench中按下Server -> Data Export 會看到下面的介面
- ![image](https://hackmd.io/_uploads/r1sthgpplx.png)
+ ![image](https://github.com/chuangleo/product_comparison/blob/main/image/Readme6.png)
   - 勾選上圖勾選的database後按下start export
 
 ****
