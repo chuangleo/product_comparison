@@ -763,6 +763,152 @@ def initialize_pchome():
         print(f"MySQL 錯誤: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/delete-labeled-product', methods=['POST'])
+def delete_labeled_product():
+    """
+    根據 MOMO 商品的 SKU 刪除對應的標註記錄
+    - 從 momo_database.momo_products 刪除該 MOMO 商品
+    - 從 products_database.products 刪除所有連結到該 MOMO SKU 的 PChome 商品
+    - 更新對應的 JSON 檔案
+    """
+    print("\n" + "="*50)
+    print("🗑️ 開始執行刪除已標註商品操作")
+    print("="*50)
+    
+    try:
+        data = request.get_json()
+        momo_sku = data.get('momo_sku')
+        
+        if not momo_sku:
+            print("❌ 錯誤：未提供 MOMO SKU")
+            return jsonify({'success': False, 'error': '未提供 MOMO SKU'}), 400
+        
+        print(f"📝 接收到刪除請求，MOMO SKU: {momo_sku}")
+        
+        # 連接到資料庫
+        products_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            database='products_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+
+        momo_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            database='momo_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+
+        pchome_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            database='pchome_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+
+        if products_conn.is_connected() and momo_conn.is_connected() and pchome_conn.is_connected():
+            products_cursor = products_conn.cursor()
+            momo_cursor = momo_conn.cursor()
+            pchome_cursor = pchome_conn.cursor()
+            
+            # 步驟 1: 先查詢有多少筆 products 會被刪除
+            products_cursor.execute(
+                "SELECT COUNT(*) FROM products WHERE connect = %s",
+                (momo_sku,)
+            )
+            products_count = products_cursor.fetchone()[0]
+            print(f"✓ 找到 {products_count} 筆連結到 MOMO SKU {momo_sku} 的 PChome 商品")
+            
+            # 步驟 2: 刪除 products 表中所有 connect 等於該 momo_sku 的記錄
+            delete_products_query = "DELETE FROM products WHERE connect = %s"
+            products_cursor.execute(delete_products_query, (momo_sku,))
+            products_deleted = products_cursor.rowcount
+            print(f"✅ 步驟 1: 從 products 表刪除了 {products_deleted} 筆記錄")
+            
+            # 步驟 3: 刪除 momo_products 表中該 SKU 的記錄
+            delete_momo_query = "DELETE FROM momo_products WHERE sku = %s"
+            momo_cursor.execute(delete_momo_query, (momo_sku,))
+            momo_deleted = momo_cursor.rowcount
+            print(f"✅ 步驟 2: 從 momo_products 表刪除了 {momo_deleted} 筆記錄")
+            
+            products_conn.commit()
+            momo_conn.commit()
+            
+            # 步驟 4: 更新 JSON 檔案
+            try:
+                # 查詢 products 表格所有資料
+                products_cursor.execute("SELECT * FROM products")
+                all_products = [dict(zip([col[0] for col in products_cursor.description], row)) 
+                               for row in products_cursor.fetchall()]
+                
+                # 查詢 momo_products 表格所有資料
+                momo_cursor.execute("SELECT * FROM momo_products")
+                all_momo = [dict(zip([col[0] for col in momo_cursor.description], row)) 
+                           for row in momo_cursor.fetchall()]
+                
+                # 查詢 pchome_products 表格所有資料
+                pchome_cursor.execute("SELECT * FROM pchome_products")
+                all_pchome = [dict(zip([col[0] for col in pchome_cursor.description], row)) 
+                             for row in pchome_cursor.fetchall()]
+                
+                # 儲存到三個 JSON 檔案
+                json_counts = save_to_json_files(all_products, all_momo, all_pchome)
+                print(f"✅ 步驟 3: 已更新 JSON 檔案")
+                print(f"   - products_latest.json: {json_counts['products']} 筆")
+                print(f"   - momo_products_latest.json: {json_counts['momo_products']} 筆")
+                print(f"   - pchome_products_latest.json: {json_counts['pchome_products']} 筆")
+                
+            except Exception as e:
+                print(f"❌ 更新 JSON 時發生錯誤: {e}")
+                # JSON 更新失敗不影響資料庫刪除
+            
+            print("="*50)
+            print(f"✅ 刪除操作完成")
+            print(f"   - 刪除 {products_deleted} 筆 PChome 商品")
+            print(f"   - 刪除 {momo_deleted} 筆 MOMO 商品")
+            print("="*50 + "\n")
+            
+            return jsonify({
+                'success': True,
+                'message': f'成功刪除 {momo_deleted} 筆 MOMO 商品和 {products_deleted} 筆相關 PChome 商品',
+                'deleted': {
+                    'products': products_deleted,
+                    'momo_products': momo_deleted
+                }
+            })
+
+    except Error as e:
+        print(f"❌ MySQL 錯誤: {e}")
+        print("="*50 + "\n")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+    finally:
+        if 'products_conn' in locals() and products_conn.is_connected():
+            products_cursor.close()
+            products_conn.close()
+            print("✓ products_database 連線已關閉")
+        if 'momo_conn' in locals() and momo_conn.is_connected():
+            momo_cursor.close()
+            momo_conn.close()
+            print("✓ momo_database 連線已關閉")
+        if 'pchome_conn' in locals() and pchome_conn.is_connected():
+            pchome_cursor.close()
+            pchome_conn.close()
+            print("✓ pchome_database 連線已關閉")
+
 if __name__ == "__main__":
     # 避免在 Flask reloader 重啟時重複執行初始化
     import os
