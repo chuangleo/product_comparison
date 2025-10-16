@@ -526,6 +526,198 @@ function handleClearPchome() {
     });
 }
 
+function handleDeleteLabeled() {
+  console.log("Delete Labeled button clicked");
+  
+  // 顯示模態對話框
+  openDeleteModal();
+}
+
+function openDeleteModal() {
+  const modal = document.getElementById('deleteModal');
+  const totalProducts = document.getElementById('totalProducts');
+  const productNumber = document.getElementById('productNumber');
+  
+  // 更新商品總數
+  if (totalProducts) {
+    totalProducts.textContent = momoProducts.length;
+  }
+  
+  // 設置商品編號輸入框的最大值
+  if (productNumber) {
+    productNumber.max = momoProducts.length;
+    productNumber.placeholder = `請輸入商品編號 (1-${momoProducts.length})`;
+  }
+  
+  // 清空輸入框
+  if (productNumber) productNumber.value = '';
+  const productSku = document.getElementById('productSku');
+  if (productSku) productSku.value = '';
+  
+  // 重置為預設選項（商品編號）
+  const numberRadio = document.querySelector('input[name="deleteMethod"][value="number"]');
+  if (numberRadio) {
+    numberRadio.checked = true;
+    toggleDeleteMethod();
+  }
+  
+  // 顯示模態對話框
+  if (modal) {
+    modal.style.display = 'block';
+    // 聚焦到輸入框
+    setTimeout(() => {
+      if (productNumber) productNumber.focus();
+    }, 100);
+  }
+}
+
+function closeDeleteModal() {
+  const modal = document.getElementById('deleteModal');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+}
+
+function toggleDeleteMethod() {
+  const selectedMethod = document.querySelector('input[name="deleteMethod"]:checked').value;
+  const numberSection = document.getElementById('numberInputSection');
+  const skuSection = document.getElementById('skuInputSection');
+  
+  if (selectedMethod === 'number') {
+    numberSection.style.display = 'block';
+    skuSection.style.display = 'none';
+    document.getElementById('productNumber').focus();
+  } else {
+    numberSection.style.display = 'none';
+    skuSection.style.display = 'block';
+    document.getElementById('productSku').focus();
+  }
+}
+
+function confirmDelete() {
+  const selectedMethod = document.querySelector('input[name="deleteMethod"]:checked').value;
+  let momoSku = null;
+  let momoProduct = null;
+  
+  if (selectedMethod === 'number') {
+    // 方法 1: 使用商品編號
+    const productNumber = document.getElementById('productNumber').value.trim();
+    
+    if (!productNumber) {
+      showMessage('❌ 請輸入商品編號！', 'error');
+      return;
+    }
+    
+    const index = parseInt(productNumber) - 1;
+    
+    if (isNaN(index) || index < 0 || index >= momoProducts.length) {
+      showMessage(`❌ 無效的商品編號！請輸入 1 到 ${momoProducts.length} 之間的數字`, 'error');
+      return;
+    }
+    
+    momoProduct = momoProducts[index];
+    momoSku = momoProduct.sku;
+    
+    // 關閉模態對話框
+    closeDeleteModal();
+    
+    // 顯示商品資訊確認
+    if (!confirm(
+      `📦 確認要刪除以下商品？\n\n` +
+      `🔢 商品編號：第 ${index + 1} 項\n` +
+      `🏷️ SKU：${momoSku}\n` +
+      `📝 商品名稱：${momoProduct.title.substring(0, 50)}${momoProduct.title.length > 50 ? '...' : ''}\n` +
+      `💰 價格：NT$ ${momoProduct.price.toLocaleString()}\n\n` +
+      `⚠️ 此操作將會：\n` +
+      `1. 刪除該 MOMO 商品\n` +
+      `2. 刪除所有連結到該 MOMO 商品的 PChome 商品\n` +
+      `3. 更新 JSON 檔案\n\n` +
+      `❗ 此操作無法復原！`
+    )) {
+      return;
+    }
+    
+  } else {
+    // 方法 2: 使用 MOMO SKU
+    const inputSku = document.getElementById('productSku').value.trim();
+    
+    if (!inputSku) {
+      showMessage('❌ 請輸入 MOMO SKU！', 'error');
+      return;
+    }
+    
+    momoSku = inputSku;
+    
+    // 嘗試找到對應的商品以顯示詳細資訊
+    momoProduct = momoProducts.find(p => p.sku === momoSku);
+    
+    // 關閉模態對話框
+    closeDeleteModal();
+    
+    if (momoProduct) {
+      // 找到商品，顯示詳細確認
+      const productIndex = momoProducts.indexOf(momoProduct) + 1;
+      if (!confirm(
+        `📦 確認要刪除以下商品？\n\n` +
+        `🔢 商品編號：第 ${productIndex} 項\n` +
+        `🏷️ SKU：${momoSku}\n` +
+        `📝 商品名稱：${momoProduct.title.substring(0, 50)}${momoProduct.title.length > 50 ? '...' : ''}\n` +
+        `💰 價格：NT$ ${momoProduct.price.toLocaleString()}\n\n` +
+        `⚠️ 此操作將會：\n` +
+        `1. 刪除該 MOMO 商品\n` +
+        `2. 刪除所有連結到該 MOMO 商品的 PChome 商品\n` +
+        `3. 更新 JSON 檔案\n\n` +
+        `❗ 此操作無法復原！`
+      )) {
+        return;
+      }
+    } else {
+      // 未找到商品，簡單確認
+      if (!confirm(
+        `⚠️ 確認要刪除 MOMO SKU「${momoSku}」及其所有相關的標註商品嗎？\n\n` +
+        `（注意：在目前顯示的商品列表中未找到此 SKU，但仍會嘗試從資料庫刪除）\n\n` +
+        `❗ 此操作無法復原！`
+      )) {
+        return;
+      }
+    }
+  }
+  
+  // 執行刪除
+  console.log(`準備刪除 MOMO SKU: ${momoSku}`);
+  showLoading();
+  
+  fetch("/delete-labeled-product", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      momo_sku: momoSku
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      hideLoading();
+      if (data.success) {
+        console.log("刪除成功：", data);
+        showMessage(
+          `✅ 成功！${data.message}\n` +
+          `- 刪除了 ${data.deleted.momo_products} 筆 MOMO 商品\n` +
+          `- 刪除了 ${data.deleted.products} 筆 PChome 商品`
+        );
+      } else {
+        console.error("刪除失敗:", data.error);
+        showMessage("❌ 刪除失敗：" + data.error, "error");
+      }
+    })
+    .catch((error) => {
+      hideLoading();
+      console.error("刪除請求失敗:", error);
+      showMessage("❌ 無法連接到伺服器！", "error");
+    });
+}
+
 // 自動勾選第一個商品
 function autoSelectFirstProduct() {
   // 延遲執行，確保 DOM 更新完成
@@ -575,6 +767,7 @@ window.onload = function () {
   const clearProductsButton = document.getElementById("clearProductsButton");
   const clearMomoButton = document.getElementById("clearMomoButton");
   const clearPchomeButton = document.getElementById("clearPchomeButton");
+  const deleteLabeledButton = document.getElementById("deleteLabeled");
 
   if (!exportButton) {
     console.error("Export button not found!");
@@ -592,11 +785,60 @@ window.onload = function () {
     console.error("Clear PCHome button not found!");
     return;
   }
+  if (!deleteLabeledButton) {
+    console.error("Delete Labeled button not found!");
+    return;
+  }
 
   exportButton.addEventListener("click", handleExport);
   clearProductsButton.addEventListener("click", handleClearProducts);
   clearMomoButton.addEventListener("click", handleClearMomo);
   clearPchomeButton.addEventListener("click", handleClearPchome);
+  deleteLabeledButton.addEventListener("click", handleDeleteLabeled);
+
+  // 綁定刪除方法切換事件
+  const deleteMethodRadios = document.getElementsByName('deleteMethod');
+  deleteMethodRadios.forEach(radio => {
+    radio.addEventListener('change', toggleDeleteMethod);
+  });
+  
+  // 綁定模態對話框的鍵盤事件
+  const modal = document.getElementById('deleteModal');
+  if (modal) {
+    // 點擊模態背景關閉
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeDeleteModal();
+      }
+    });
+    
+    // ESC 鍵關閉模態對話框
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.style.display === 'block') {
+        closeDeleteModal();
+      }
+    });
+  }
+  
+  // 綁定輸入框的 Enter 鍵
+  const productNumber = document.getElementById('productNumber');
+  const productSku = document.getElementById('productSku');
+  
+  if (productNumber) {
+    productNumber.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        confirmDelete();
+      }
+    });
+  }
+  
+  if (productSku) {
+    productSku.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        confirmDelete();
+      }
+    });
+  }
 
   // 初始隱藏載入動畫
   hideLoading();
