@@ -526,6 +526,77 @@ function handleClearPchome() {
     });
 }
 
+function handleExportAllData() {
+  console.log("Export All Data button clicked");
+  
+  if (!confirm(
+    "📦 確認要匯出所有資料庫資料？\n\n" +
+    "此操作將匯出：\n" +
+    "📁 sql/\n" +
+    "  ✓ products.sql\n" +
+    "  ✓ momo_products.sql\n" +
+    "  ✓ pchome_products.sql\n" +
+    "📁 json/\n" +
+    "  ✓ products.json\n" +
+    "  ✓ momo_products.json\n" +
+    "  ✓ pchome_products.json\n\n" +
+    "檔名將使用 query 名稱\n\n" +
+    "是否繼續？"
+  )) {
+    return;
+  }
+  
+  showLoading();
+  console.log("正在匯出資料...");
+  
+  // 使用 fetch 下載檔案
+  fetch("/export-all-data", {
+    method: "POST",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      // 從 Content-Disposition header 取得檔名
+      let filename = 'product_data_export.zip'; // 預設值
+      const contentDisposition = response.headers.get('Content-Disposition');
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+        if (filenameMatch && filenameMatch[1]) {
+          filename = filenameMatch[1].replace(/['"]/g, '');
+        }
+      }
+      
+      console.log(`📦 準備下載檔案: ${filename}`);
+      
+      return response.blob().then(blob => ({ blob, filename }));
+    })
+    .then(({ blob, filename }) => {
+      hideLoading();
+      
+      // 建立下載連結
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      
+      // 清理
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      console.log(`✅ 資料匯出成功: ${filename}`);
+      showMessage(`✅ 成功！資料已匯出為 ${filename}`);
+    })
+    .catch((error) => {
+      hideLoading();
+      console.error("匯出資料失敗:", error);
+      showMessage("❌ 匯出資料失敗：" + error.message, "error");
+    });
+}
+
 function handleDeleteLabeled() {
   console.log("Delete Labeled button clicked");
   
@@ -764,6 +835,7 @@ window.onload = function () {
 
   // 綁定按鈕事件
   const exportButton = document.getElementById("exportButton");
+  const exportAllDataButton = document.getElementById("exportAllDataButton");
   const clearProductsButton = document.getElementById("clearProductsButton");
   const clearMomoButton = document.getElementById("clearMomoButton");
   const clearPchomeButton = document.getElementById("clearPchomeButton");
@@ -771,6 +843,10 @@ window.onload = function () {
 
   if (!exportButton) {
     console.error("Export button not found!");
+    return;
+  }
+  if (!exportAllDataButton) {
+    console.error("Export All Data button not found!");
     return;
   }
   if (!clearProductsButton) {
@@ -791,6 +867,7 @@ window.onload = function () {
   }
 
   exportButton.addEventListener("click", handleExport);
+  exportAllDataButton.addEventListener("click", handleExportAllData);
   clearProductsButton.addEventListener("click", handleClearProducts);
   clearMomoButton.addEventListener("click", handleClearMomo);
   clearPchomeButton.addEventListener("click", handleClearPchome);
