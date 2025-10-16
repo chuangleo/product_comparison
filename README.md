@@ -4,14 +4,13 @@
 ## Date:  16:37PM CST, Wednesday, October 15, 2025
 ### 1) 安裝依賴
 #### step1. 安裝uv(pip,一般windows方法二擇一)
-- **使用pip(推薦)**：
-   ```bash
-   python -m pip install --upgrade uv 
-   ```
-   
-- **一般windows方法**：
+- **一般windows方法(推薦)**：
    ```bash
    powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+- **使用pip(有python環境下可用)**：
+   ```bash
+   python -m pip install --upgrade uv 
    ```
 #### step2. 進入product_comparison所在的路徑
    ```bash
