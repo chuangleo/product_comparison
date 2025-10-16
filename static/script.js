@@ -494,7 +494,7 @@ function handleClearPchome() {
   console.log("Clear PCHome button clicked");
   if (
     !confirm(
-      "確定要清空 pchome_database.pchome_products 表格嗎？此操作無法復原！"
+      "確定要清空並重新載入 pchome_database.pchome_products 表格嗎？\n\n執行內容：\n1. 清空資料庫\n2. 清空 JSON 檔案\n3. 從 pchome_products.json 重新載入資料\n4. 更新 JSON 檔案"
     )
   ) {
     return;
@@ -506,36 +506,15 @@ function handleClearPchome() {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.success) {
-        console.log("pchome_database.pchome_products 已清空");
-        showMessage("pchome_database.pchome_products 表格已清空！");
-        // 重新初始化 pchome_database 以恢復數據
-        return fetch("/initialize-pchome", {
-          method: "POST",
-        });
-      } else {
-        console.error("清空 pchome_database.pchome_products 失敗:", data.error);
-        hideLoading();
-        showMessage(
-          "清空 pchome_database.pchome_products 失敗：" + data.error,
-          "error"
-        );
-        throw new Error(data.error);
-      }
-    })
-    .then((response) => response.json())
-    .then((data) => {
       hideLoading();
       if (data.success) {
-        console.log("pchome_database.pchome_products 已重新初始化");
-        showMessage("pchome_database.pchome_products 表格已重新初始化！");
+        const insertedCount = data.inserted || 0;
+        console.log(`pchome_database.pchome_products 已清空並重新載入 ${insertedCount} 筆資料`);
+        showMessage(`成功！已清空並重新載入 ${insertedCount} 筆 PChome 商品資料！`);
       } else {
-        console.error(
-          "重新初始化 pchome_database.pchome_products 失敗:",
-          data.error
-        );
+        console.error("處理 pchome_database.pchome_products 失敗:", data.error);
         showMessage(
-          "重新初始化 pchome_database.pchome_products 失敗：" + data.error,
+          "處理 pchome_database.pchome_products 失敗：" + data.error,
           "error"
         );
       }
