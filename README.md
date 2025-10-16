@@ -42,7 +42,7 @@
  uv run .\product_scraper.py  
    ```
    - 輸入要爬蟲的關鍵字、英文名稱以及要找的數量
-   ![image](https://hackmd.io/_uploads/Hy5LwJCpgg.png)
+   ![image](https://github.com/chuangleo/product_comparison/blob/main/image/Readme1.png)
 
 #### step2. 運行比對網頁程式
    ```Python
