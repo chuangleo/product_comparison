@@ -763,6 +763,322 @@ def initialize_pchome():
         print(f"MySQL 錯誤: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/export-all-data', methods=['POST'])
+def export_all_data():
+    """
+    匯出所有資料：
+    1. 匯出 3 個 table 的 SQL 檔案（INSERT 語句）到 sql 資料夾
+    2. 匯出 3 個 JSON 檔案到 json 資料夾
+    3. 打包成 ZIP 檔案供下載（檔名使用 query 名稱）
+    """
+    print("\n" + "="*50)
+    print("📦 開始執行資料匯出操作")
+    print("="*50)
+    
+    import zipfile
+    import io
+    from flask import send_file
+    
+    try:
+        # 連接到三個資料庫
+        products_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            database='products_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+
+        momo_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            database='momo_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+
+        pchome_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            database='pchome_database',
+            auth_plugin='caching_sha2_password',
+            autocommit=True,
+            use_unicode=True,
+            charset='utf8mb4'
+        )
+
+        if products_conn.is_connected() and momo_conn.is_connected() and pchome_conn.is_connected():
+            products_cursor = products_conn.cursor()
+            momo_cursor = momo_conn.cursor()
+            pchome_cursor = pchome_conn.cursor()
+            
+            # 建立記憶體中的 ZIP 檔案
+            memory_file = io.BytesIO()
+            
+            # 獲取 query 名稱（從 momo_products 表中取得）
+            query_name = "product_data"  # 預設值
+            try:
+                momo_cursor.execute("SELECT query FROM momo_products LIMIT 1")
+                result = momo_cursor.fetchone()
+                if result and result[0]:
+                    query_name = result[0].replace(' ', '_')  # 將空格替換為底線
+            except:
+                pass
+            
+            with zipfile.ZipFile(memory_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                
+                # === 1. 匯出 products 表的 SQL 和 JSON ===
+                print("✓ 正在匯出 products 表...")
+                products_cursor.execute("SELECT * FROM products")
+                products_data = [dict(zip([col[0] for col in products_cursor.description], row)) 
+                                for row in products_cursor.fetchall()]
+                
+                # 產生 SQL INSERT 語句並放入 sql 資料夾（不包含建表語句，只有資料）
+                products_sql = generate_sql_insert('products', products_data, [
+                    'sku', 'title', 'image', 'url', 'platform', 'connect', 'price', 'uncertainty_problem', 'query'
+                ], include_create_table=False)
+                zipf.writestr('sql/products.sql', products_sql)
+                
+                # 產生 JSON 並放入 json 資料夾
+                products_json = json.dumps(convert_decimal(products_data), ensure_ascii=False, indent=2)
+                zipf.writestr('json/products.json', products_json)
+                print(f"  ✅ products: {len(products_data)} 筆記錄")
+                
+                # === 2. 匯出 momo_products 表的 SQL 和 JSON ===
+                print("✓ 正在匯出 momo_products 表...")
+                momo_cursor.execute("SELECT * FROM momo_products")
+                momo_data = [dict(zip([col[0] for col in momo_cursor.description], row)) 
+                            for row in momo_cursor.fetchall()]
+                
+                # 產生 SQL INSERT 語句並放入 sql 資料夾（不包含建表語句，只有資料）
+                momo_sql = generate_sql_insert('momo_products', momo_data, [
+                    'sku', 'title', 'image', 'url', 'platform', 'connect', 'price', 'num', 'query'
+                ], include_create_table=False)
+                zipf.writestr('sql/momo_products.sql', momo_sql)
+                
+                # 產生 JSON 並放入 json 資料夾
+                momo_json = json.dumps(convert_decimal(momo_data), ensure_ascii=False, indent=2)
+                zipf.writestr('json/momo_products.json', momo_json)
+                print(f"  ✅ momo_products: {len(momo_data)} 筆記錄")
+                
+                # === 3. 匯出 pchome_products 表的 SQL 和 JSON ===
+                print("✓ 正在匯出 pchome_products 表...")
+                pchome_cursor.execute("SELECT * FROM pchome_products")
+                pchome_data = [dict(zip([col[0] for col in pchome_cursor.description], row)) 
+                              for row in pchome_cursor.fetchall()]
+                
+                # 產生 SQL INSERT 語句並放入 sql 資料夾（不包含建表語句，只有資料）
+                pchome_sql = generate_sql_insert('pchome_products', pchome_data, [
+                    'sku', 'title', 'image', 'url', 'platform', 'connect', 'price', 'query'
+                ], include_create_table=False)
+                zipf.writestr('sql/pchome_products.sql', pchome_sql)
+                
+                # 產生 JSON 並放入 json 資料夾
+                pchome_json = json.dumps(convert_decimal(pchome_data), ensure_ascii=False, indent=2)
+                zipf.writestr('json/pchome_products.json', pchome_json)
+                print(f"  ✅ pchome_products: {len(pchome_data)} 筆記錄")
+            
+            # 將檔案指標移到開頭
+            memory_file.seek(0)
+            
+            # 產生檔案名稱（使用 query 名稱）
+            filename = f'{query_name}.zip'
+            
+            print("="*50)
+            print("✅ 資料匯出完成")
+            print(f"   - Query 名稱：{query_name}")
+            print(f"   - 匯出檔名：{filename}")
+            print(f"   - 總共匯出 {len(products_data) + len(momo_data) + len(pchome_data)} 筆記錄")
+            print(f"   - 檔案結構：sql/ 和 json/ 資料夾")
+            print("="*50 + "\n")
+            
+            return send_file(
+                memory_file,
+                mimetype='application/zip',
+                as_attachment=True,
+                download_name=filename
+            )
+
+    except Error as e:
+        print(f"❌ MySQL 錯誤: {e}")
+        print("="*50 + "\n")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+    finally:
+        if 'products_conn' in locals() and products_conn.is_connected():
+            products_cursor.close()
+            products_conn.close()
+            print("✓ products_database 連線已關閉")
+        if 'momo_conn' in locals() and momo_conn.is_connected():
+            momo_cursor.close()
+            momo_conn.close()
+            print("✓ momo_database 連線已關閉")
+        if 'pchome_conn' in locals() and pchome_conn.is_connected():
+            pchome_cursor.close()
+            pchome_conn.close()
+            print("✓ pchome_database 連線已關閉")
+
+def generate_sql_insert(table_name, data, columns, include_create_table=True):
+    """
+    產生完整的 SQL 檔案（可選擇是否包含建表語句）
+    
+    Args:
+        table_name: 資料表名稱
+        data: 資料列表（字典格式）
+        columns: 欄位名稱列表
+        include_create_table: 是否包含 DROP 和 CREATE TABLE 語句（預設 False，只匯出資料）
+    
+    Returns:
+        完整的 SQL 語句字串
+    """
+    sql_lines = []
+    
+    # SQL 檔案標頭
+    sql_lines.append("-- MySQL dump")
+    sql_lines.append(f"-- 匯出時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    sql_lines.append("-- ------------------------------------------------------")
+    sql_lines.append("")
+    
+    # 設定字元集
+    sql_lines.append("/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;")
+    sql_lines.append("/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;")
+    sql_lines.append("/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;")
+    sql_lines.append("/*!50503 SET NAMES utf8mb4 */;")
+    sql_lines.append("/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;")
+    sql_lines.append("/*!40103 SET TIME_ZONE='+00:00' */;")
+    sql_lines.append("/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;")
+    sql_lines.append("/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;")
+    sql_lines.append("/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;")
+    sql_lines.append("/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;")
+    sql_lines.append("")
+    
+    # 只在需要時才包含建表語句
+    if include_create_table:
+        # 定義各表的建表語句
+        table_schemas = {
+            'products': """
+CREATE TABLE IF NOT EXISTS `products` (
+  `sku` varchar(100) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` text,
+  `url` text,
+  `platform` varchar(50) DEFAULT NULL,
+  `connect` varchar(100) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `uncertainty_problem` tinyint unsigned NOT NULL DEFAULT '0',
+  `query` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+""",
+            'momo_products': """
+CREATE TABLE IF NOT EXISTS `momo_products` (
+  `sku` varchar(100) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` text,
+  `url` text,
+  `platform` varchar(50) DEFAULT NULL,
+  `connect` varchar(100) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `num` int DEFAULT NULL,
+  `query` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+""",
+            'pchome_products': """
+CREATE TABLE IF NOT EXISTS `pchome_products` (
+  `sku` varchar(100) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` text,
+  `url` text,
+  `platform` varchar(50) DEFAULT NULL,
+  `connect` varchar(100) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `query` varchar(100) DEFAULT NULL,
+  UNIQUE KEY `sku` (`sku`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+"""
+        }
+        
+        # 加入建表語句
+        sql_lines.append(f"--")
+        sql_lines.append(f"-- Table structure for table `{table_name}`")
+        sql_lines.append(f"--")
+        sql_lines.append("")
+        sql_lines.append(f"DROP TABLE IF EXISTS `{table_name}`;")
+        sql_lines.append(table_schemas.get(table_name, f"-- 無建表語句: {table_name}"))
+        sql_lines.append("")
+    
+    # 加入資料
+    if not data:
+        sql_lines.append(f"-- {table_name} 表沒有資料")
+    else:
+        sql_lines.append(f"--")
+        sql_lines.append(f"-- Dumping data for table `{table_name}` ({len(data)} 筆)")
+        sql_lines.append(f"-- 注意：此檔案只包含資料，不會修改表結構")
+        sql_lines.append(f"--")
+        sql_lines.append("")
+        
+        # 清空表格資料（但保留表結構）
+        sql_lines.append(f"-- 清空現有資料")
+        sql_lines.append(f"TRUNCATE TABLE `{table_name}`;")
+        sql_lines.append("")
+        
+        sql_lines.append("LOCK TABLES `" + table_name + "` WRITE;")
+        sql_lines.append("/*!40000 ALTER TABLE `" + table_name + "` DISABLE KEYS */;")
+        
+        for item in data:
+            values = []
+            for col in columns:
+                value = item.get(col)
+                if value is None:
+                    values.append('NULL')
+                elif isinstance(value, (int, float, Decimal)):
+                    values.append(str(value))
+                else:
+                    # 字串需要跳脫特殊字元
+                    escaped_value = str(value).replace('\\', '\\\\').replace("'", "\\'")
+                    values.append(f"'{escaped_value}'")
+            
+            values_str = ', '.join(values)
+            sql_lines.append(f"INSERT INTO `{table_name}` ({', '.join([f'`{col}`' for col in columns])}) VALUES ({values_str});")
+        
+        sql_lines.append("/*!40000 ALTER TABLE `" + table_name + "` ENABLE KEYS */;")
+        sql_lines.append("UNLOCK TABLES;")
+    
+    sql_lines.append("")
+    
+    # SQL 檔案結尾
+    sql_lines.append("/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;")
+    sql_lines.append("/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;")
+    sql_lines.append("/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;")
+    sql_lines.append("/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;")
+    sql_lines.append("/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;")
+    sql_lines.append("/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;")
+    sql_lines.append("/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;")
+    sql_lines.append("/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;")
+    sql_lines.append("")
+    sql_lines.append("-- Dump completed")
+    
+    return '\n'.join(sql_lines)
+
+def convert_decimal(data):
+    """轉換 Decimal 為 float"""
+    converted = []
+    for item in data:
+        new_item = {}
+        for key, value in item.items():
+            if isinstance(value, Decimal):
+                new_item[key] = float(value)
+            else:
+                new_item[key] = value
+        converted.append(new_item)
+    return converted
+
 @app.route('/delete-labeled-product', methods=['POST'])
 def delete_labeled_product():
     """
