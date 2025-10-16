@@ -368,20 +368,20 @@ def fetch_products_for_momo(keyword, max_products=50):
 
 def fetch_products_for_pchome(keyword, max_products=50):
     """
-    使用 Selenium 從 PChome 購物網抓取商品資訊，優化效率的同時獲取詳細商品名稱
+    使用 Selenium 從 PChome 購物網抓取商品資訊，適應 2025年10月 的新版網頁結構。
     
     Args:
         keyword (str): 搜尋關鍵字
         max_products (int): 最大抓取商品數量
     
     Returns:
-        list: 商品資訊列表，每個商品包含 id, title, price, image_url, url, platform, sku
+        list: 商品資訊列表
     """
     products = []
     product_id = 1
     driver = None
     page = 1
-    seen_skus = set()  # 追蹤已經收集的 SKU，避免重複
+    seen_skus = set()
 
     try:
         chrome_options = Options()
@@ -390,177 +390,118 @@ def fetch_products_for_pchome(keyword, max_products=50):
         chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--window-size=1920,1080')
         chrome_options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
-        # 啟用圖片載入以獲取更完整的頁面內容
-        prefs = {
-            "profile.default_content_setting_values.notifications": 2
-        }
+        
+        prefs = {"profile.default_content_setting_values.notifications": 2}
         chrome_options.add_experimental_option("prefs", prefs)
+        
         driver = webdriver.Chrome(options=chrome_options)
-        driver.set_page_load_timeout(30)
+        driver.set_page_load_timeout(40)
+        wait = WebDriverWait(driver, 20)
         print(f"正在搜尋 PChome: {keyword}")
 
-        # 收集所有基本商品信息
-        all_basic_products = []
-        
-        while len(all_basic_products) < max_products:
-            encoded_keyword = quote(keyword)
-            search_url = f"https://ecshweb.pchome.com.tw/search/v3.3/all/results?q={encoded_keyword}&page={page}&sort=sale/dc"
-            print(f"正在抓取第 {page} 頁基本信息...")
+        encoded_keyword = quote(keyword)
+        search_url = f"https://24h.pchome.com.tw/search/?q={encoded_keyword}"
+        driver.get(search_url)
+        time.sleep(2)
 
-            driver.get(search_url)
-            time.sleep(1)
-
+        while len(products) < max_products:
+            print(f"正在抓取 PChome 第 {page} 頁...")
+            
             try:
-                body = driver.find_element(By.TAG_NAME, "pre").text
-                data = json.loads(body)
-                items = data.get("prods", [])
-            except Exception as e:
-                print("解析 PChome 商品 JSON 失敗:", e)
-                break
-
-            if not items:
-                print("無法找到商品元素，可能已到達最後一頁")
-                break
-
-            for item in items:
-                if len(all_basic_products) >= max_products:
-                    break
-                    
-                base_title = item.get("name", "")
-                price = item.get("price", 0)
-                pid = item.get("Id", "")
-                url = f"https://24h.pchome.com.tw/prod/{pid}" if pid else ""
-                sku = pid if pid else ""
-                image_url = item.get("picB", "")
+                # 等待新結構的商品項目出現
+                wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "li.c-listInfoGrid__item--gridCardGray5")))
                 
-                # 修正圖片 URL 處理邏輯
-                if image_url:
-                    if image_url.startswith("//"):
-                        image_url = "https:" + image_url
-                    elif image_url.startswith("/"):
-                        image_url = "https://cs.ecimg.tw" + image_url
-                    elif not image_url.startswith("http"):
-                        image_url = "https://cs.ecimg.tw/" + image_url
-                else:
-                    image_url = ""
-
-                if base_title and price > 0 and url:
-                    # 檢查 SKU 是否重複
-                    if sku and sku in seen_skus:
-                        continue
-                    
-                    all_basic_products.append({
-                        "base_title": base_title,
-                        "price": price,
-                        "pid": pid,
-                        "url": url,
-                        "sku": sku,
-                        "image_url": image_url
-                    })
-                    
-                    if sku:
-                        seen_skus.add(sku)
-
-            if len(items) < 20:
-                print("可能已到達最後一頁，停止抓取基本信息")
+                # 滾動頁面以確保所有商品都載入
+                driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                time.sleep(2)
+                
+                # 根據新結構獲取所有商品元素
+                product_elements = driver.find_elements(By.CSS_SELECTOR, "li.c-listInfoGrid__item--gridCardGray5")
+            except TimeoutException:
+                print("頁面加載超時或找不到新結構的商品容器 (li.c-listInfoGrid__item--gridCardGray5)。")
+                try:
+                    driver.save_screenshot("pchome_error_screenshot.png")
+                    print("已儲存錯誤截圖: pchome_error_screenshot.png")
+                except Exception as e:
+                    print(f"儲存截圖失敗: {e}")
                 break
 
-            page += 1
-            time.sleep(0.5)
+            if not product_elements:
+                print("找不到商品，可能已到達最後一頁。")
+                break
 
-        print(f"收集到 {len(all_basic_products)} 個基本商品信息")
-        
-        # 批量獲取詳細名稱 - 使用多標籤頁優化
-        print("開始批量獲取詳細商品名稱...")
-        
-        batch_size = 5  # 每批處理 5 個商品
-        for i in range(0, len(all_basic_products), batch_size):
-            batch = all_basic_products[i:i+batch_size]
-            print(f"處理批次 {i//batch_size + 1}/{(len(all_basic_products) + batch_size - 1)//batch_size}")
-            
-            # 為每個商品打開新標籤頁
-            original_window = driver.current_window_handle
-            windows_data = []
-            
-            for j, product_info in enumerate(batch):
+            for element in product_elements:
+                if len(products) >= max_products:
+                    break
+
                 try:
-                    if j == 0:
-                        # 第一個商品使用當前標籤頁
-                        driver.get(product_info["url"])
-                        windows_data.append({
-                            "handle": original_window,
-                            "product_info": product_info
-                        })
-                    else:
-                        # 其他商品打開新標籤頁
-                        driver.execute_script("window.open('');")
-                        driver.switch_to.window(driver.window_handles[-1])
-                        driver.get(product_info["url"])
-                        windows_data.append({
-                            "handle": driver.current_window_handle,
-                            "product_info": product_info
-                        })
-                except Exception as e:
-                    print(f"打開商品頁面失敗: {e}")
-                    continue
-            
-            # 等待所有頁面載入
-            time.sleep(3)
-            
-            # 逐一處理每個標籤頁
-            for window_data in windows_data:
-                try:
-                    driver.switch_to.window(window_data["handle"])
-                    product_info = window_data["product_info"]
+                    # 提取連結和 SKU
+                    link_element = element.find_element(By.CSS_SELECTOR, "a.c-prodInfoV2__link")
+                    url = link_element.get_attribute("href")
+                    if not url.startswith("https://"):
+                        url = "https://24h.pchome.com.tw" + url
                     
-                    # 獲取詳細名稱
-                    detailed_title = product_info["base_title"]
+                    sku_match = re.search(r'/prod/(.*?)(?:\?|$)', url)
+                    sku = sku_match.group(1) if sku_match else ""
+
+                    # 提取標題
+                    title_elem = element.find_element(By.CSS_SELECTOR, "div.c-prodInfoV2__title")
+                    title = title_elem.text.strip()
+
+                    # 提取價格
+                    price_text = element.find_element(By.CSS_SELECTOR, "div.c-prodInfoV2__salePrice").text
+                    price = int(re.sub(r'[^\d]', '', price_text))
+
+                    # 提取圖片
+                    image_url = ""
                     try:
-                        secondary_element = driver.find_element(By.CSS_SELECTOR, "span.o-prodMainName__colorSecondary.o-prodMainName__colorSecondary--1700[aria-hidden='true']")
-                        secondary_name = secondary_element.text.strip()
-                        if secondary_name:
-                            # 將品牌名稱放在前面，商品名稱放在後面
-                            detailed_title = secondary_name + " " + product_info["base_title"]
-                            print(f"組合完整名稱: {secondary_name} + {product_info['base_title']}")
+                        img_elem = element.find_element(By.CSS_SELECTOR, "div.c-prodInfoV2__head img")
+                        image_url = img_elem.get_attribute("src")
                     except NoSuchElementException:
-                        try:
-                            secondary_element = driver.find_element(By.CSS_SELECTOR, "span.o-prodMainName__colorSecondary")
-                            secondary_name = secondary_element.text.strip()
-                            if secondary_name:
-                                # 將品牌名稱放在前面，商品名稱放在後面
-                                detailed_title = secondary_name + " " + product_info["base_title"]
-                                print(f"組合完整名稱（備用選擇器）: {secondary_name} + {product_info['base_title']}")
-                        except NoSuchElementException:
-                            pass  # 使用原始名稱                    # 創建最終商品對象
-                    product = {
-                        "id": product_id,
-                        "title": detailed_title,
-                        "price": product_info["price"],
-                        "image_url": product_info["image_url"],
-                        "url": product_info["url"],
-                        "platform": "pchome",
-                        "sku": product_info["sku"]
-                    }
-                    products.append(product)
-                    product_id += 1
-                    
-                except Exception as e:
-                    print(f"處理商品詳細信息失敗: {e}")
+                        image_url = "" # 找不到圖片就算了
+
+                    if title and price > 0 and url and sku:
+                        if sku in seen_skus:
+                            continue
+                        
+                        seen_skus.add(sku)
+                        product = {
+                            "id": product_id,
+                            "title": title,
+                            "price": price,
+                            "image_url": image_url,
+                            "url": url,
+                            "platform": "pchome",
+                            "sku": sku
+                        }
+                        products.append(product)
+                        product_id += 1
+
+                except (NoSuchElementException, ValueError) as e:
                     continue
             
-            # 關閉除了第一個標籤頁外的所有標籤頁
-            for handle in driver.window_handles[1:]:
-                driver.switch_to.window(handle)
-                driver.close()
-            
-            # 切換回原始標籤頁
-            driver.switch_to.window(original_window)
-            
-            # 批次間稍作休息
-            time.sleep(1)
+            if len(products) >= max_products:
+                break
 
-        print(f"成功從 PChome 獲取 {len(products)} 個唯一商品（已自動過濾重複 SKU）")
+            # 點擊下一頁按鈕
+            try:
+                # 先滾動到頁面底部，確保下一頁按鈕可見
+                driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                time.sleep(1)
+                
+                # 使用新的選擇器來找到下一頁按鈕
+                # 根據 HTML 結構，尋找包含向右箭頭圖示的元素
+                next_icon = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "i.o-iconFonts--arrowSolidRight")))
+                # 點擊圖示的父元素（應該是可點擊的按鈕）
+                next_page_button = next_icon.find_element(By.XPATH, "..")
+                driver.execute_script("arguments[0].click();", next_page_button)
+                page += 1
+                time.sleep(random.uniform(3, 5))
+            except (TimeoutException, NoSuchElementException):
+                print("找不到下一頁按鈕，抓取結束。")
+                break
         
+        print(f"成功從 PChome 獲取 {len(products)} 個唯一商品。")
         return products
 
     except Exception as e:
@@ -568,7 +509,6 @@ def fetch_products_for_pchome(keyword, max_products=50):
         return []
 
     finally:
-        # 確保關閉瀏覽器
         if driver:
             try:
                 driver.quit()
