@@ -49,6 +49,10 @@
                 <i class="fas fa-download"></i>
                 匯出勾選商品
             </button>
+            <button id="deleteLabeled" class="btn btn-warning">
+                <i class="fas fa-eraser"></i>
+                刪除已標註商品
+            </button>
             <button id="clearProductsButton" class="btn btn-danger">
                 <i class="fas fa-trash"></i>
                 清空 Products 表格
@@ -67,6 +71,65 @@
         <div class="loading" id="loadingSpinner">
             <div class="spinner"></div>
             <p>處理中，請稍候...</p>
+        </div>
+
+        <!-- 刪除商品模態對話框 -->
+        <div class="modal" id="deleteModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-trash-alt"></i> 刪除已標註商品</h2>
+                    <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-description">請選擇刪除方式並輸入相關資訊</p>
+                    
+                    <div class="delete-method-selector">
+                        <label class="radio-option">
+                            <input type="radio" name="deleteMethod" value="number" checked>
+                            <div class="radio-content">
+                                <div class="radio-icon">🔢</div>
+                                <div class="radio-text">
+                                    <strong>使用商品編號</strong>
+                                    <span>適合從頁面直接操作（推薦）</span>
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <label class="radio-option">
+                            <input type="radio" name="deleteMethod" value="sku">
+                            <div class="radio-content">
+                                <div class="radio-icon">🏷️</div>
+                                <div class="radio-text">
+                                    <strong>使用 MOMO SKU</strong>
+                                    <span>適合從資料庫查詢後刪除</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="input-section" id="numberInputSection">
+                        <label for="productNumber">商品編號</label>
+                        <input type="number" id="productNumber" class="modal-input" 
+                               placeholder="請輸入商品編號 (1-100)" min="1" max="100">
+                        <small>目前共有 <span id="totalProducts">0</span> 項 MOMO 商品</small>
+                    </div>
+                    
+                    <div class="input-section" id="skuInputSection" style="display: none;">
+                        <label for="productSku">MOMO SKU</label>
+                        <input type="text" id="productSku" class="modal-input" 
+                               placeholder="請輸入 MOMO SKU (例如: 202012345678)">
+                        <small>SKU 可從資料庫或 JSON 檔案中查詢</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="closeDeleteModal()">
+                        <i class="fas fa-times"></i> 取消
+                    </button>
+                    <button class="btn btn-danger" onclick="confirmDelete()">
+                        <i class="fas fa-trash"></i> 刪除
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- 商品比較表格 -->
